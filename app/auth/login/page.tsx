@@ -3,8 +3,8 @@ import Link from "next/link";
 import LoginForm from "@/app/components/auth/LoginForm";
 
 export const metadata : Metadata = {
-    title: "CashTrackr - Iniciar Sesión", 
-    description: "Inicia sesión para controlar tus finanzas personales",
+    title: "Slotify - Iniciar Sesión", 
+    description: "Inicia sesión para agendar tus citas",
 };
 
 export default function LoginPage() {
@@ -20,14 +20,14 @@ export default function LoginPage() {
                     href="/auth/register"
                     className="text-center"
                 >
-                    ¿No tienes una cuenta? Crea una cuenta
+                    ¿No tienes una cuenta? <span className="text-[#A65F60]">Crea una cuenta</span>
                 </Link>
 
                 <Link 
                     href="/auth/forgot-password"
                     className="text-center"
                 >
-                    ¿Olvidaste tu contraseña? Reestablecer
+                    ¿Olvidaste tu contraseña? <span className="text-[#A65F60]"> Reestablecer</span>
                 </Link>
             </nav>
         </>

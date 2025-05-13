@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "../components/ui/Logo";
 import ToastNotification from "../components/ui/ToastNotification";
 import BrandTitle from "../components/ui/BrandTitle";
+import BrandLogo from "../components/ui/BrandLogo";
 
 export default function AuthLayout({
     children,

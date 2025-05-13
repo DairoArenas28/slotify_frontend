@@ -24,7 +24,7 @@ export default function RegisterPage() {
                     href="/auth/login"
                     className="text-center"
                 >
-                    ¿Ya tienes cuenta? Iniciar Sesión
+                    ¿Ya tienes cuenta? <span className="text-[#A65F60]">Iniciar Sesión</span>
                 </Link>
             </nav>
         </>
