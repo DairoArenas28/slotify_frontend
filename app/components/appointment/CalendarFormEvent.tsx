@@ -1,17 +1,27 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import ErrorMessage from "../ui/ErrorMessage";
 import SuccessMessage from "../ui/SuccessMessage";
 import createAppointment from "@/actions/create-appointment-action";
+import { DraftServiceList } from "@/src/schemas";
 
 export default function CalendarFormEvent({ closeModal }: { closeModal: () => void }) {
+
+    const [service, setService] = useState<DraftServiceList>([])
 
     const ref = useRef<HTMLFormElement>(null)
     const [state, dispatch] = useActionState(createAppointment, {
         errors: [],
         success: ''
     })
+
+    useEffect(() => {
+        const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setService(data))
+    }, [])
 
     useEffect(() => {
         if (state.success) {
@@ -68,10 +78,11 @@ export default function CalendarFormEvent({ closeModal }: { closeModal: () => vo
                     className="w-full border border-gray-300 p-3 rounded-lg"
                 >
                     <option value="">Selecciona un servicio</option>
-                    <option value="1">Corte de Cabello</option>
-                    <option value="2">Manicure</option>
-                    <option value="3">Masaje</option>
-                    {/* Puedes reemplazar estas opciones dinámicamente si lo deseas */}
+                    {service?.map((s: { id: number; name: string }) => (
+                        <option className="text-gray-800 bg-white font-medium" key={s.id} value={s.id}>
+                            {s.name}
+                        </option>
+                    ))}
                 </select>
             </div>
 

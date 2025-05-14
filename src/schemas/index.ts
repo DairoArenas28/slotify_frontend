@@ -79,3 +79,6 @@ export const AppointmentSchema = z.object({
 export type User = z.infer<typeof UserSchema>
 export const CalendarsAPIResponseSchema = z.array(CalendarAPIResponseSchema)
 export const ServicesAPIResponseSchema = z.array(ServiceSchema)
+
+export const ServiceListSchema = z.array(ServiceSchema);
+export type DraftServiceList = z.infer<typeof ServiceListSchema>;
