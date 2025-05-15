@@ -12,7 +12,6 @@ export default async function createAppointment(prevState: ActionStateType, form
     const appointmentData = {
         date: formData.get('date'),
         start_time: formData.get('start_time'),
-        end_time: formData.get('end_time'),
         serviceId: formData.get('serviceId')
     }
     
@@ -27,7 +26,7 @@ export default async function createAppointment(prevState: ActionStateType, form
     }
     const token = await getToken()
 
-    const url = `${process.env.API_URL}/appointment`
+    const url = `${process.env.API_URL}/appointment/${+register.data.serviceId}`
 
     const req = await fetch(url, {
         method: 'POST',
@@ -39,7 +38,6 @@ export default async function createAppointment(prevState: ActionStateType, form
         body: JSON.stringify({
             date: register.data.date,
             start_time: register.data.start_time,
-            end_time: register.data.end_time,
             serviceId: +register.data.serviceId
         })
     })

@@ -67,12 +67,7 @@ export const AppointmentSchema = z.object({
     date: z.string().refine(val => !isNaN(Date.parse(val)), {
         message: "Formato inválido",
     }),
-    start_time: z.string().refine(val => !isNaN(Date.parse(val)), {
-        message: "Formato inválido",
-    }),
-    end_time: z.string().refine(val => !isNaN(Date.parse(val)), {
-        message: "Formato inválido",
-    }),
+    start_time: z.string(),
     serviceId: z.string().min(1, { message: "Servicio es requerido" }),
 });
 

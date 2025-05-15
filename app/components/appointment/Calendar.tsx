@@ -26,7 +26,7 @@ export  default function Calendar({ calendars }: Props) {
             height={800}
             plugins={[timeGridPlugin, interactionPlugin]}
             initialView='timeGridWeek'
-            weekends={false}
+            weekends={true}
             locale='es'
             headerToolbar={{
                 left: 'prev,next',

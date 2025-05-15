@@ -1,12 +1,13 @@
 import { verifySession } from "@/src/auth/dal"
 import getToken from "@/src/auth/token"
 
-export async function GET(request: Request) {
+export async function GET(request: Request, { params }: { params: Promise<{ date: string}> }) {
 
+    const { date } = await params
     //await verifySession()
 
     const token = await getToken()
-    const url = `${process.env.API_URL}/services`
+    const url = `${process.env.API_URL}/appointment/available-hours/${date}`
     const req = await fetch(url, {
         headers: {
             'Authorization': `Bearer ${token}`
