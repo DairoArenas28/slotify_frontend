@@ -58,20 +58,37 @@ export const ServiceSchema = z.object({
 })
 
 export const CalendarAPIResponseSchema = z.object({
+    id: z.number(),
     title: z.string(),
     start: z.string(),
     end: z.string(),
 })
 
 export const AppointmentSchema = z.object({
+    id: z.number({ message: "Id obligatorio" }),
     date: z.string().refine(val => !isNaN(Date.parse(val)), {
         message: "Formato inválido",
     }),
     start_time: z.string(),
-    serviceId: z.string().min(1, { message: "Servicio es requerido" }),
+    serviceId: z.number().min(1, { message: "Servicio es requerido" }),
 });
 
+export const DraftAppointmentSchema = z.object({
+    date: z.string().refine(val => !isNaN(Date.parse(val)), {
+        message: "Formato inválido",
+    }),
+    start_time: z.string(),
+    serviceId: z.number().min(1, { message: "Servicio es requerido" }),
+})
+
+
 export type User = z.infer<typeof UserSchema>
+export type Appointment = z.infer<typeof AppointmentSchema>
+
+export const AppointmentFormSchema = AppointmentSchema.omit({ id: true });
+
+export type ValidateAppointmentForm = z.infer<typeof AppointmentFormSchema>;
+
 export const CalendarsAPIResponseSchema = z.array(CalendarAPIResponseSchema)
 export const ServicesAPIResponseSchema = z.array(ServiceSchema)
 

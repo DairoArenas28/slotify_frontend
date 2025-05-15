@@ -8,8 +8,8 @@ type ActionStateType = {
 }
 
 export async function confirmAccount(token: string, prevState: ActionStateType) {
-    console.log("Confirming account server action")
-    console.log(token)
+    //console.log("Confirming account server action")
+    //console.log(token)
     const confirmToken = TokenSchema.safeParse(token)
     if (!confirmToken.success) {
         return {

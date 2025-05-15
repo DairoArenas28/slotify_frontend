@@ -1,13 +1,16 @@
 "use client"
-import {  Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { Dialog, DialogPanel,  Transition, TransitionChild } from '@headlessui/react';
+import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import CalendarFormEvent from '../appointment/CalendarFormEvent';
+import EditCalendarFormEvent from '../appointment/EditCalendarFormEvent';
+import { Appointment } from '@/src/schemas';
 
 const componentsMap = {
-    "AddCalendar": CalendarFormEvent,
-    //"EditExpense": EditExpenseForm,
-    //"DeleteExpense": DeleteExpenseForm
+  "AddCalendar": CalendarFormEvent,
+  "EditCalendar": EditCalendarFormEvent,
+  //"EditExpense": EditExpenseForm,
+  //"DeleteExpense": DeleteExpenseForm
 }
 
 export default function ModalContainer() {
@@ -16,17 +19,49 @@ export default function ModalContainer() {
   const searchParams = useSearchParams()
   const showModal = searchParams.get('showModal')
 
+  const [appointment, setAppointment] = useState<Appointment>()
+
   const show = showModal ? true : false
 
   const addCalendar = searchParams.get('addCalendar')
-  //const editExpense = searchParams.get('editExpenseId')
+  const editCalendar = searchParams.get('editCalendar')
+  const appointmentId = searchParams.get('appointmentId')
+
+  //console.log('Appointmend Edit', appointmentId)
+
+  useEffect(() => {
+    const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/id/${appointmentId}`
+    fetch(url)
+      .then(async (res) => {
+        if (!res.ok) {
+          console.error('Error en la respuesta del servidor:', res.status);
+          return null;
+        }
+        try {
+          return await res.json();
+        } catch (e) {
+          console.error('Error al parsear JSON:', e);
+          return null;
+        }
+      })
+      .then((data) => {
+        const cleaned = {
+          ...data,
+          date: data.date?.split('T')[0]
+        };
+        setAppointment(cleaned);
+      });
+  }, [appointmentId])
+
+  //console.log(appointment)
   //const deleteExpense = searchParams.get('deleteExpenseId')
 
   const getComponentName = () => {
-    if(addCalendar) return "AddCalendar"
+    if (addCalendar) return "AddCalendar"
+    if (editCalendar) return "EditCalendar"
     //if(editExpense) return "EditExpense"
     //if(deleteExpense) return "DeleteExpense"
-  } 
+  }
 
   const componentName = getComponentName()
   const ComponentToRender = componentName ? componentsMap[componentName] : null
@@ -67,7 +102,7 @@ export default function ModalContainer() {
                 leaveTo="opacity-0 scale-95"
               >
                 <DialogPanel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                    {ComponentToRender ? <ComponentToRender closeModal={closeModal} /> : null}
+                  {ComponentToRender ? <ComponentToRender appointment={appointment} closeModal={closeModal} /> : null}
                 </DialogPanel>
               </TransitionChild>
             </div>

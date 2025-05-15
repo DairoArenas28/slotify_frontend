@@ -21,5 +21,11 @@ export const getCalendar = cache(async () => {
     }
 
     const calendar = CalendarsAPIResponseSchema.parse(json)
-    return calendar
+
+    const calendarWithStringIds = calendar.map(item => ({
+        ...item,
+        id: String(item.id),
+    }));
+
+    return calendarWithStringIds
 })
