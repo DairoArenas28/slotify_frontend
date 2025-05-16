@@ -1,6 +1,6 @@
 "use server"
 import getToken from "@/src/auth/token"
-import { AppointmentFormSchema, ErrorResponseSchema, SuccessSchema } from "@/src/schemas"
+import { AppointmentFormSchema, DraftAppointmentSchema, ErrorResponseSchema, SuccessSchema } from "@/src/schemas"
 
 type ActionStateType = {
     errors: string[]
@@ -15,7 +15,7 @@ export default async function createAppointment(prevState: ActionStateType, form
         serviceId: formData.get('serviceId')
     }
     
-    const register = AppointmentFormSchema.safeParse(appointmentData)
+    const register = DraftAppointmentSchema.safeParse(appointmentData)
 
     if (!register.success) {
         const errors = register.error.errors.map(error => error.message)

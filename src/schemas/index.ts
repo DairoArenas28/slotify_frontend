@@ -78,7 +78,7 @@ export const DraftAppointmentSchema = z.object({
         message: "Formato inválido",
     }),
     start_time: z.string(),
-    serviceId: z.number().min(1, { message: "Servicio es requerido" }),
+    serviceId: z.string().min(1, { message: "Servicio es requerido" }),
 })
 
 

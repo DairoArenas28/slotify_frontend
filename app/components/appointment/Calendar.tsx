@@ -3,8 +3,9 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventApi } from '@fullcalendar/core/index.js';
+import { EventApi, EventClickArg } from '@fullcalendar/core/index.js';
 import { useRouter } from 'next/navigation';
+import { EventContentArg } from '@fullcalendar/core';
 import 'tippy.js/dist/tippy.css';
 import tippy from 'tippy.js';
 
@@ -28,9 +29,16 @@ export default function Calendar({ calendars }: Props) {
         // Aquí puedes abrir un modal, agregar un evento, etc.
     };
 
-    const handleEventClick = (info: { event: EventApi }) => {
-        router.push(`/admin/appointment/edit/${info.event.id}`)
-    }
+    const handleEventClick = (info: EventClickArg) => {
+        // Evita que al hacer clic en el botón de eliminar se abra el modal de edición
+        if ((info.jsEvent.target as HTMLElement).closest('button')) return;
+
+        router.push(`/admin/appointment/edit/${info.event.id}`);
+    };
+
+    const handleDelete = (id: string) => {
+        router.push(`?deleteAppointmentShow=true&deleteAppointmentId=${id}`)
+    };
 
     return (
         <div className="w-full h-screen overflow-auto md:overflow-visible">
@@ -52,20 +60,29 @@ export default function Calendar({ calendars }: Props) {
                     eventClick={handleEventClick}
                     //dateClick={handleDateClick}
                     eventColor='red'
-                    eventContent={(arg) => {
+                    // Dentro de tu componente de calendario:
+                    eventContent={(arg: EventContentArg) => {
                         const [name, service, price] = arg.event.title.split('\n');
-                        const { timeText } = arg
-                        //console.log(arg)
-                        return {
-                            html: `
-                        <div>
-                            <p>${timeText}</p>
-                            <b>${name}</b><br/>
-                            <span>${service}</span><br/>
-                            <span>${price}</span>
-                        </div>
-                    `
-                        };
+                        const id = arg.event.id;
+
+                        return (
+                            <div className="relative">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 🛑 Detiene el clic para que no dispare el handler de edición
+                                        handleDelete(id);
+                                    }}
+                                    className="absolute top-0 right-0 text-white font-bold cursor-pointer mx-2 "
+                                    aria-label="Eliminar cita"
+                                >
+                                    X
+                                </button>
+                                <p>{arg.timeText}</p>
+                                <b>{name}</b><br />
+                                <span>{service}</span><br />
+                                <span>{price}</span>
+                            </div>
+                        );
                     }}
                     eventDidMount={(info) => {
                         const [name, service, price] = info.event.title.split('\n');
@@ -83,6 +100,6 @@ export default function Calendar({ calendars }: Props) {
 
                 />
             </div>
-        </div>
+        </div >
     )
 }
