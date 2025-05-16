@@ -21,6 +21,9 @@ export const getAppointment = cache(async (appointmentId: string) => {
     }
 
     const appointment = AppointmentSchema.parse(json)
-
-    return appointment
+    const cleaned = {
+        ...appointment,
+        date: appointment.date?.split('T')[0]
+    };
+    return cleaned
 })

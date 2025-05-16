@@ -1,29 +1,41 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
-import ErrorMessage from "../ui/ErrorMessage";
-import SuccessMessage from "../ui/SuccessMessage";
-import createAppointment from "@/actions/create-appointment-action";
+import { useEffect, useRef, useState } from "react";
 import { Appointment, DraftServiceList } from "@/src/schemas";
-import { toast } from "react-toastify";
-
+import { getAvailableHours } from "@/src/services/available-hours";
 type TimeArraySchema = string[];
 
-export default function CalendarFormEvent({appointment} : {appointment?: Appointment}) {
+export default function CalendarFormEvent({ appointment }: { appointment?: Appointment }) {
 
     const [service, setService] = useState<DraftServiceList>([])
     const [availableHours, setAvailableHours] = useState<TimeArraySchema>([])
     const [selectedDate, setSelectedDate] = useState('');
+    const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
+    const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
 
+    console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
+    /*if (appointment?.date) {
+        const availableHours = await getAvailableHours(appointment.date);
+    }*/
     //console.log('Appointment form event', appointment)
     useEffect(() => {
-        const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/available-hours/${selectedDate}`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setAvailableHours(data))
+        const loadAvailableHours = async () => {
+            const dateToUse = appointment?.date || selectedDate;
+            if (!dateToUse) return;
 
-    }, [selectedDate])
+            const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/available-hours/${dateToUse}`;
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                setAvailableHours(data);
+            } catch (error) {
+                console.error('Error cargando las horas disponibles:', error);
+            }
+        };
+
+        loadAvailableHours();
+    }, [appointment, selectedDate]);
 
     useEffect(() => {
         const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services`
@@ -50,6 +62,8 @@ export default function CalendarFormEvent({appointment} : {appointment?: Appoint
                 id="start_time"
                 name="start_time"
                 className="w-full border border-gray-300 p-3 rounded-lg"
+                value={selectedHour}
+                onChange={(e) => setSelectedHour(e.target.value)}
             >
                 <option value="">Selecciona una hora</option>
                 {availableHours?.map((hours) => (
@@ -65,6 +79,8 @@ export default function CalendarFormEvent({appointment} : {appointment?: Appoint
                     id="serviceId"
                     name="serviceId"
                     className="w-full border border-gray-300 p-3 rounded-lg"
+                    value={selectedService}
+                    onChange={(e) => setSelectedService(Number(e.target.value))}
                 >
                     <option value="">Selecciona un servicio</option>
                     {service?.map((s: { id: number; name: string }) => (
