@@ -83,6 +83,7 @@ export const DraftAppointmentSchema = z.object({
 
 
 export type User = z.infer<typeof UserSchema>
+export type Service = z.infer<typeof ServiceSchema>
 export type Appointment = z.infer<typeof AppointmentSchema>
 
 export const AppointmentFormSchema = AppointmentSchema.omit({ id: true });

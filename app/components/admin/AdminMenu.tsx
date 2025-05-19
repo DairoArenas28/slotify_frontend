@@ -33,7 +33,11 @@ export default function AdminMenu({ user }: { user: User }) {
             <Link
                 href='/admin'
                 className='block p-2 hover:text-purple-950'
-            >Mis Presupuestos</Link>
+            >Mis Citas</Link>
+            <Link
+                href='/admin/service'
+                className='block p-2 hover:text-purple-950'
+            >Mis Servicios</Link>
             <button
                 className='block p-2 hover:text-purple-950'
                 type='button'

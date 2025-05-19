@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     }
 }
 
-export default async function EditBudgetPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditAppointmentPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
 
     const appointment = await getAppointment(id)
@@ -33,13 +33,13 @@ export default async function EditBudgetPage({ params }: { params: Promise<{ id:
                     <h1 className='font-black text-4xl text-purple-950 my-5'>
                         Editar Cita: {appointmentCleaned.date}
                     </h1>
-                    <p className="text-xl font-bold">Llena el formulario para actualizar {''}
-                        <span className="text-amber-500">presupuesto</span>
+                    <p className="text-xl font-bold">Llena el formulario para actualizar la {''}
+                        <span className="text-[#A3B18A]">cita</span>
                     </p>
                 </div>
                 <Link
                     href={'/admin'}
-                    className='bg-amber-500 p-2 rounded-lg text-white font-bold w-full md:w-auto text-center'
+                    className='bg-[#C08081] p-2 rounded-lg text-white font-bold w-full md:w-auto text-center'
                 >
                     Volver
                 </Link>

@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
 import CalendarFormEvent from "./CalendarFormEvent"
 
-export default function CreateBudgetForm() {
+export default function CreateCalendarForm() {
 
     const router = useRouter()
     const [state, dispatch] = useActionState(createAppointment, {

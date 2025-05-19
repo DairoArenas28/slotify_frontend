@@ -3,7 +3,7 @@ import getToken from "@/src/auth/token"
 
 export async function GET(request: Request) {
 
-    //await verifySession()
+    await verifySession()
 
     const token = await getToken()
     const url = `${process.env.API_URL}/services`

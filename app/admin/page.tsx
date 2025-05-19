@@ -1,6 +1,5 @@
 import { getCalendar } from "@/src/services/calendars";
 import Calendar from "../components/appointment/Calendar";
-import ModalContainer from "../components/ui/ModalContainer";
 import AddCalendarButton from "../components/appointment/AddCalendarButton";
 import DeleteAppointmentModal from "../components/appointment/DeleteAppointmentModal";
 

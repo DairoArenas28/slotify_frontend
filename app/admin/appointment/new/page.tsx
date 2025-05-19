@@ -1,7 +1,7 @@
 import CreateCalendarFormEvent from "@/app/components/appointment/CreateCalendarFormEvent";
 import Link from "next/link";
 
-export default function CreateBudgetPage() {
+export default function CreateAppointmentPage() {
     return (
         <>
             <div className='flex flex-col-reverse md:flex-row md:justify-between items-center'>
@@ -9,8 +9,8 @@ export default function CreateBudgetPage() {
                     <h1 className='font-black text-4xl text-[#4B3F3F] my-5'>
                         Nueva cita
                     </h1>
-                    <p className="text-xl font-bold">Llena el formulario y crea una cita {''}
-                        <span className="text-[#A3B18A]">Agenda</span>
+                    <p className="text-xl font-bold">Llena el formulario y crea una {''}
+                        <span className="text-[#A3B18A]">Cita</span>
                     </p>
                 </div>
                 <Link
