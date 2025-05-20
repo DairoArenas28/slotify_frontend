@@ -4,10 +4,12 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import AddServiceForm from '../service/AddServiceForm';
 import EditServiceForm from '../service/EditServiceForm';
+import DeleteServiceForm from '../service/DeleteServiceForm';
 
 const componentsMap = {
   "AddService": AddServiceForm,
   "EditService": EditServiceForm,
+  "DeleteService": DeleteServiceForm,
   //"EditExpense": EditExpenseForm,
   //"DeleteExpense": DeleteExpenseForm
 }
@@ -22,6 +24,7 @@ export default function ModalContainer() {
 
   const addService = searchParams.get('addService')
   const editService = searchParams.get('editService')
+  const deleteService = searchParams.get('deleteService')
 
   //console.log('Appointmend Edit', appointmentId)
 
@@ -31,6 +34,7 @@ export default function ModalContainer() {
   const getComponentName = () => {
     if (addService) return "AddService"
     if (editService) return "EditService"
+    if (deleteService) return "DeleteService"
     //if(editExpense) return "EditExpense"
     //if(deleteExpense) return "DeleteExpense"
   }

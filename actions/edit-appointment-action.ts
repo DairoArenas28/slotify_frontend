@@ -13,7 +13,7 @@ export default async function editAppointment(appointmentId: Appointment['id'] ,
     const appointmentData = {
         date: formData.get('date'),
         start_time: formData.get('start_time'),
-        serviceId: Number(formData.get('serviceId'))
+        serviceId: formData.get('serviceId')
     }
     console.log(appointmentData)
     const appointment = DraftAppointmentSchema.safeParse(appointmentData)

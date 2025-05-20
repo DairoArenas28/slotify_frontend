@@ -48,18 +48,18 @@ export default function DeleteAppointmentForm() {
         <>
             <DialogTitle
                 as="h3"
-                className="font-black text-4xl text-purple-950 my-5"
+                className="font-black text-4xl text-[#4B3F3F] my-5"
             >
                 Eliminar cita
             </DialogTitle>
             {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
             <p className="text-xl font-bold">Confirma para eliminar , {''}
-                <span className="text-amber-500">la cita</span>
+                <span className="text-[#A3B18A]">la cita</span>
             </p>
             <p className='text-gray-600 text-sm'>(La cita no se podrá recuperar)</p>
             <div className="grid grid-cols-2 gap-5 mt-10">
                 <button
-                    className="bg-amber-500 w-full p-3 text-white uppercase font-bold hover:bg-amber-600 cursor-pointer transition-colors"
+                    className="bg-[#C08081] hover:bg-[#A65F60] w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
                     onClick={closeModal}
                 >Cancelar</button>
                 <button

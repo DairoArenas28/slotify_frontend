@@ -38,7 +38,7 @@ export default function ServiceMenu({serviceId} : { serviceId: Service['id'] }) 
                             <button
                                 type='button'
                                 className='block px-3 py-1 text-sm leading-6 text-red-500 cursor-pointer'
-                                onClick={() => router.push(``)}
+                                onClick={() => router.push(`?showModal=true&deleteService=true&deleteServiceId=${serviceId}`)}
                             >
                                 Eliminar Servicio
                             </button>

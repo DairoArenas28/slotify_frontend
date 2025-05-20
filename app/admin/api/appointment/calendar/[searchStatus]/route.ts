@@ -1,11 +1,15 @@
 import { cache } from "react"
 import { notFound } from "next/navigation"
-import getToken from "../auth/token"
-import { CalendarsAPIResponseSchema } from "../schemas"
+import getToken from "@/src/auth/token"
+import { CalendarsAPIResponseSchema } from "@/src/schemas"
+import { NextResponse } from "next/server"
 
-export const getCalendar = cache(async (searchStatus: string) => {
+export async function GET(request: Request, { params }: { params: { searchStatus: string} }) {
+
+    const { searchStatus } = params
+    console.log(params)
+
     const token = await getToken()
-    console.log("Estado", searchStatus)
     const url = `${process.env.API_URL}/appointment/calendar/${searchStatus}`
     const req = await fetch(url, {
         headers: {
@@ -28,5 +32,5 @@ export const getCalendar = cache(async (searchStatus: string) => {
         id: String(item.id),
     }));
 
-    return calendarWithStringIds
-})
+    return NextResponse.json(calendarWithStringIds);
+}

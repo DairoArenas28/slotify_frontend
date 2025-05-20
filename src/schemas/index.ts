@@ -99,6 +99,10 @@ export type ValidateAppointmentForm = z.infer<typeof AppointmentFormSchema>;
 export const CalendarsAPIResponseSchema = z.array(CalendarAPIResponseSchema)
 export const ServicesAPIResponseSchema = z.array(ServiceSchema)
 
+export const CalendarListSchema = z.array(CalendarAPIResponseSchema)
+
 export const ServiceListSchema = z.array(ServiceSchema);
 export type DraftServiceList = z.infer<typeof ServiceListSchema>;
 export type DraftServiceForm = z.infer<typeof ServiceSchema>;
+
+export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;

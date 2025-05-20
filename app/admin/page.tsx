@@ -1,25 +1,13 @@
-import { getCalendar } from "@/src/services/calendars";
-import Calendar from "../components/appointment/Calendar";
-import AddCalendarButton from "../components/appointment/AddCalendarButton";
-import DeleteAppointmentModal from "../components/appointment/DeleteAppointmentModal";
 
-export default async function Admin() {
+import CalendarPanel from "../components/appointment/CalendarPanel";
 
-    const calendars = await getCalendar()
 
-    return (
-        <>
-            <div className="flex-row">
-                <div className="flex justify-end items-end my-5">
-                    <AddCalendarButton />
-                </div>
-                <div className="">
-                    <Calendar
-                        calendars={calendars}
-                    />
-                </div>
-                <DeleteAppointmentModal />
-            </div>
-        </>
-    )
+export default async function Admin({ searchParams }: { searchParams: { status?: string } }) {
+  const searchStatus = searchParams.status || "reservado";
+
+  return (
+    <CalendarPanel
+      initialStatus={searchStatus}
+    />
+  );
 }

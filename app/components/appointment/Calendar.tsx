@@ -1,23 +1,18 @@
 "use client"
 import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventApi, EventClickArg } from '@fullcalendar/core/index.js';
+import { EventClickArg } from '@fullcalendar/core/index.js';
 import { useRouter } from 'next/navigation';
 import { EventContentArg } from '@fullcalendar/core';
 import 'tippy.js/dist/tippy.css';
 import tippy from 'tippy.js';
+import { DraftCalendarList } from '@/src/schemas';
 
-type CalendarEvent = {
-    id: string
-    title: string
-    start: string
-    end: string
-};
+
 
 type Props = {
-    calendars: CalendarEvent[]
+    calendars: DraftCalendarList[];
 };
 
 export default function Calendar({ calendars }: Props) {
@@ -40,6 +35,11 @@ export default function Calendar({ calendars }: Props) {
         router.push(`?deleteAppointmentShow=true&deleteAppointmentId=${id}`)
     };
 
+    const formattedCalendars = calendars.map((cal) => ({
+    ...cal,
+    id: String(cal.id), // convertimos id a string
+    }));
+
     return (
         <div className="w-full h-screen overflow-auto md:overflow-visible">
             <div className="min-w-[900px] min-h-[600px] md:min-w-full md:min-h-full">
@@ -56,7 +56,7 @@ export default function Calendar({ calendars }: Props) {
                     }}
                     slotMinTime='6:00'
                     slotMaxTime='22:00'
-                    events={calendars}
+                    events={formattedCalendars}
                     eventClick={handleEventClick}
                     //dateClick={handleDateClick}
                     eventColor='red'
