@@ -81,6 +81,12 @@ export const DraftAppointmentSchema = z.object({
     serviceId: z.string().min(1, { message: "Servicio es requerido" }),
 })
 
+export const DraftServiceSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    duration_minutes: z.number(),
+    price: z.number()
+})
 
 export type User = z.infer<typeof UserSchema>
 export type Service = z.infer<typeof ServiceSchema>
@@ -95,3 +101,4 @@ export const ServicesAPIResponseSchema = z.array(ServiceSchema)
 
 export const ServiceListSchema = z.array(ServiceSchema);
 export type DraftServiceList = z.infer<typeof ServiceListSchema>;
+export type DraftServiceForm = z.infer<typeof ServiceSchema>;

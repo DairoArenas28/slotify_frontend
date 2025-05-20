@@ -1,4 +1,4 @@
-import CreateCalendarFormEvent from "@/app/components/appointment/CreateCalendarFormEvent";
+import CreateCalendarFormEvent from "@/app/components/appointment/AddAppointmentForm";
 import Link from "next/link";
 
 export default function CreateAppointmentPage() {

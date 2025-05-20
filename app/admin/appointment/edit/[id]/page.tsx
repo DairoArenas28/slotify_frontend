@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import EditCalendarFormEvent from "@/app/components/appointment/EditCalendarFormEvent"
+import EditCalendarFormEvent from "@/app/components/appointment/EditAppointmentForm"
 import { getAppointment } from "@/src/services/appointment"
 //import { getBudget } from "@/src/services/budgets"
 

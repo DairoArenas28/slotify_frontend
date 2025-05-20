@@ -5,7 +5,7 @@ import { useActionState, useEffect } from "react"
 import ErrorMessage from "../ui/ErrorMessage"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
-import CalendarFormEvent from "./CalendarFormEvent"
+import CalendarFormEvent from "./AppointmentForm"
 
 export default function CreateCalendarForm() {
 
