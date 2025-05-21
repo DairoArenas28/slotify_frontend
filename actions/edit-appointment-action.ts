@@ -1,14 +1,19 @@
 "use server"
 
 import getToken from "@/src/auth/token"
-import { Appointment, DraftAppointmentSchema, ErrorResponseSchema, SuccessSchema } from "@/src/schemas"
+import { Appointment, DraftAppointmentSchema, ErrorResponseSchema, Service, SuccessSchema } from "@/src/schemas"
+
+type AppointmentIdAndServiceIdType = {
+    appointmentId: Appointment['id']
+    serviceId: Service['id']
+}
 
 type ActionStateType = {
     errors: string[],
     success: string
 }
 
-export default async function editAppointment(appointmentId: Appointment['id'] , prevState: ActionStateType, formData: FormData) {
+export default async function editAppointment({appointmentId, serviceId} : AppointmentIdAndServiceIdType, prevState: ActionStateType, formData: FormData) {
     
     const appointmentData = {
         date: formData.get('date'),
@@ -24,7 +29,7 @@ export default async function editAppointment(appointmentId: Appointment['id'] ,
         }
     }
     const token = await getToken()
-    const req = await fetch(`${process.env.API_URL}/appointment/${appointmentId}`, {
+    const req = await fetch(`${process.env.API_URL}/appointment/${appointmentId}/service/${serviceId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json', 

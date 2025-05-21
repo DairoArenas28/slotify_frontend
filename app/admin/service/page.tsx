@@ -2,7 +2,7 @@ import AddServiceButton from "@/app/components/service/AddServiceButton";
 import CardService from "@/app/components/service/CardService";
 import ModalContainer from "@/app/components/ui/ModalContainer";
 
-export default function Service() {
+export default function ServicePage() {
     
     return (
         <>

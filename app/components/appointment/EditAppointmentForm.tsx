@@ -12,7 +12,10 @@ import editAppointment from "@/actions/edit-appointment-action"
 export default function EditAppointmentForm({appointment}: {appointment: Appointment}) {
 
     const router = useRouter()
-    const editApointmentWithId = editAppointment.bind(null, appointment.id)
+    const editApointmentWithId = editAppointment.bind(null, {
+        appointmentId: appointment.id,
+        serviceId: appointment.serviceId
+    })
     const [state, dispatch] = useActionState(editApointmentWithId, {
         errors: [],
         success: ''
