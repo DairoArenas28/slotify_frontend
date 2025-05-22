@@ -35,11 +35,22 @@ export default function Calendar({ calendars }: Props) {
         router.push(`?deleteAppointmentShow=true&deleteAppointmentId=${id}`)
     };
 
-    const formattedCalendars = calendars.map((cal) => ({
-    ...cal,
-    id: String(cal.id), // convertimos id a string
-    }));
+    const formattedCalendars = calendars.map((cal) => {
+        let color = 'gray'; // Color por defecto
 
+        if (cal.status === 'reservado') {
+            color = '#E6677C';
+        } else if (cal.status === 'completado') {
+            color = '#4F93CE';
+        }
+
+        return {
+            ...cal,
+            id: String(cal.id),
+            color,
+        };
+    });
+    console.log(formattedCalendars)
     return (
         <div className="w-full h-screen overflow-auto md:overflow-visible">
             <div className="min-w-[900px] min-h-[600px] md:min-w-full md:min-h-full">
@@ -59,7 +70,6 @@ export default function Calendar({ calendars }: Props) {
                     events={formattedCalendars}
                     eventClick={handleEventClick}
                     //dateClick={handleDateClick}
-                    eventColor='red'
                     // Dentro de tu componente de calendario:
                     eventContent={(arg: EventContentArg) => {
                         const [name, service, price] = arg.event.title.split('\n');

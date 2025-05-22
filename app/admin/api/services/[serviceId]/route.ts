@@ -12,8 +12,8 @@ export async function GET(request: Request, {params} : {params: {serviceId: stri
             'Authorization': `Bearer ${token}`
         }
     })
-    console.log(req)
-    console.log('serviceId', serviceId)
+    //console.log(req)
+    //console.log('serviceId', serviceId)
     const json = await req.json()
 
     if(!req.ok) {

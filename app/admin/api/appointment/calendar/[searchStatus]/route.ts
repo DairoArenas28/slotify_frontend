@@ -7,7 +7,7 @@ import { NextResponse } from "next/server"
 export async function GET(request: Request, { params }: { params: { searchStatus: string} }) {
 
     const { searchStatus } = params
-    console.log(params)
+    //console.log(params)
 
     const token = await getToken()
     const url = `${process.env.API_URL}/appointment/calendar/${searchStatus}`

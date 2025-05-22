@@ -8,6 +8,9 @@ import AddCalendarButton from "./AddCalendarButton";
 import Calendar from "./Calendar";
 import DeleteAppointmentModal from "./DeleteAppointmentModal";
 import { DraftCalendarList } from "@/src/schemas";
+import useSWR from "swr";
+import { fetcher } from "@/src/utils/fetcher";
+import SkeletonLoader from "../ui/SkeletonLoader";
 
 type Props = {
     initialStatus: string;
@@ -15,7 +18,6 @@ type Props = {
 
 export default function CalendarPanel({ initialStatus }: Props) {
     const [searchStatus, setSearchStatus] = useState(initialStatus);
-    const [calendars, setCalendars] = useState<DraftCalendarList[]>([]);
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -30,12 +32,8 @@ export default function CalendarPanel({ initialStatus }: Props) {
         router.push(`?${params.toString()}`);
     }, [searchStatus]);
 
-    useEffect(() => {
-        const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/calendar/${searchStatus}`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setCalendars(data))
-    }, [searchStatus])
+    const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/calendar/${searchStatus}`;
+    const { data: calendars, error, isLoading } = useSWR<DraftCalendarList[]>(url, fetcher);
 
     return (
         <>
@@ -49,7 +47,11 @@ export default function CalendarPanel({ initialStatus }: Props) {
             </div>
 
             <div className="flex flex-col">
-                <Calendar calendars={calendars} />
+                {isLoading ? (
+                    <SkeletonLoader />
+                    ) : (
+                    <Calendar calendars={calendars ?? []} />
+                )}
                 <DeleteAppointmentModal />
             </div>
         </>

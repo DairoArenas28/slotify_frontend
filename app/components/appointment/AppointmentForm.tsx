@@ -13,7 +13,7 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
 
-    console.log(appointment?.date)
+    //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
     /*if (appointment?.date) {
         const availableHours = await getAvailableHours(appointment.date);
@@ -28,6 +28,7 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
             try {
                 const res = await fetch(url);
                 const data = await res.json();
+                setAvailableHours([])
                 setAvailableHours(data);
             } catch (error) {
                 console.error('Error cargando las horas disponibles:', error);
@@ -36,7 +37,7 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
 
         loadAvailableHours();
     }, [appointment, selectedDate]);
-
+    //console.log(availableHours)
     useEffect(() => {
         const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services`
         fetch(url)

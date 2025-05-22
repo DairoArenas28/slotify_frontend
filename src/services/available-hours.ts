@@ -1,4 +1,3 @@
-import { verifySession } from "@/src/auth/dal"
 import getToken from "@/src/auth/token"
 import { cache } from "react"
 

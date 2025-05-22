@@ -5,7 +5,7 @@ import { CalendarsAPIResponseSchema } from "../schemas"
 
 export const getCalendar = cache(async (searchStatus: string) => {
     const token = await getToken()
-    console.log("Estado", searchStatus)
+    //console.log("Estado", searchStatus)
     const url = `${process.env.API_URL}/appointment/calendar/${searchStatus}`
     const req = await fetch(url, {
         headers: {

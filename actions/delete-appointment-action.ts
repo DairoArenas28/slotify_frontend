@@ -14,7 +14,7 @@ export default async function deleteAppointment(
     prevState: ActionStateType
 ) {
     const token = await getToken()
-    console.log(token)
+    //console.log(token)
     const url = `${process.env.API_URL}/appointment/${deleteAppointmentId}`
     const req = await fetch(url, {
         method: 'DELETE',

@@ -20,3 +20,4 @@ export function formatDate(isoString: string) {
 
     return formatter.format(date)
 }
+

@@ -14,7 +14,7 @@ export default async function deleteService(
     prevState: ActionStateType
 ) {
     const token = await getToken()
-    console.log(token)
+    //console.log(token)
     const url = `${process.env.API_URL}/services/${serviceId}`
     const req = await fetch(url, {
         method: 'DELETE',

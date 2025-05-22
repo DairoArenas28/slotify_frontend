@@ -62,6 +62,7 @@ export const CalendarAPIResponseSchema = z.object({
     title: z.string(),
     start: z.string(),
     end: z.string(),
+    status: z.string()
 })
 
 export const AppointmentSchema = z.object({
@@ -88,6 +89,23 @@ export const DraftServiceSchema = z.object({
     price: z.number()
 })
 
+export const ChartDataSchema = z.array(
+  z.object({
+    label: z.string(), // o usa .regex(/^\d+$/) si esperas solo números
+    amount: z.number(),
+  })
+);
+
+export const FinanceDataSchema = z.object({
+  totalEarnings: z.number(),
+  completedAppointments: z.number().int(),
+  topService: z.object({
+    name: z.string(),
+    count: z.number().int(),
+  }),
+  chartData: ChartDataSchema, // <-- Aquí está la corrección
+});
+
 export type User = z.infer<typeof UserSchema>
 export type Service = z.infer<typeof ServiceSchema>
 export type Appointment = z.infer<typeof AppointmentSchema>
@@ -101,8 +119,11 @@ export const ServicesAPIResponseSchema = z.array(ServiceSchema)
 
 export const CalendarListSchema = z.array(CalendarAPIResponseSchema)
 
+export const FinanceDataWithoutChartSchema = FinanceDataSchema.omit({ chartData: true });
+export type FinanceDataWithoutChart = z.infer<typeof FinanceDataWithoutChartSchema>;
+
 export const ServiceListSchema = z.array(ServiceSchema);
 export type DraftServiceList = z.infer<typeof ServiceListSchema>;
 export type DraftServiceForm = z.infer<typeof ServiceSchema>;
-
+export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
 export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;
