@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import getToken from "../auth/token"
 import { AppointmentSchema } from "../schemas"
 
-export const getAppointment = cache(async (appointmentId: string) => {
+export const getAppointmentId = cache(async (appointmentId: string) => {
     const token = await getToken()
     const url = `${process.env.API_URL}/appointment/id/${appointmentId}`
     const req = await fetch(url, {

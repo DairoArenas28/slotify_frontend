@@ -8,7 +8,7 @@ import AddCalendarButton from "./AddCalendarButton";
 import Calendar from "./Calendar";
 import DeleteAppointmentModal from "./DeleteAppointmentModal";
 import { DraftCalendarList } from "@/src/schemas";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { fetcher } from "@/src/utils/fetcher";
 import SkeletonLoader from "../ui/SkeletonLoader";
 
@@ -34,6 +34,8 @@ export default function CalendarPanel({ initialStatus }: Props) {
 
     const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/calendar/${searchStatus}`;
     const { data: calendars, error, isLoading } = useSWR<DraftCalendarList[]>(url, fetcher);
+
+    //await mutate();
 
     return (
         <>

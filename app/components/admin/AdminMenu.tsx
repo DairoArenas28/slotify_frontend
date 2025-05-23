@@ -31,7 +31,7 @@ export default function AdminMenu({ user }: { user: User }) {
                 className='block p-2 hover:text-purple-950'
             >Mi Perfil</Link>
             <Link
-                href='/admin'
+                href='/admin/appointment'
                 className='block p-2 hover:text-purple-950'
             >Mis Citas</Link>
             <Link

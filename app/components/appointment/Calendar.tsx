@@ -15,6 +15,12 @@ type Props = {
     calendars: DraftCalendarList[];
 };
 
+interface TippyElement extends HTMLElement {
+    _tippy?: {
+        destroy: () => void;
+    };
+}
+
 export default function Calendar({ calendars }: Props) {
 
     const router = useRouter()
@@ -95,6 +101,11 @@ export default function Calendar({ calendars }: Props) {
                         );
                     }}
                     eventDidMount={(info) => {
+                        const el = info.el as TippyElement;
+                        if (el._tippy) {
+                            el._tippy.destroy();
+                        }
+                        //console.log(info)
                         const [name, service, price] = info.event.title.split('\n');
                         tippy(info.el, {
                             content: `

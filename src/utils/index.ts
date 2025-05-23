@@ -21,3 +21,26 @@ export function formatDate(isoString: string) {
     return formatter.format(date)
 }
 
+export function getDateToday() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    const date = `${yyyy}-${mm}-${dd}`;
+
+    const year = `${yyyy}-${mm}`;
+
+    const month = `${yyyy}-${mm}`;
+
+    const day = `${yyyy}-${mm}`;
+
+    return {
+        date,
+        year,
+        month,
+        day
+    }
+
+}
+

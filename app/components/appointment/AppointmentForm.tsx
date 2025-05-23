@@ -3,23 +3,28 @@
 import { useEffect, useRef, useState } from "react";
 import { Appointment, DraftServiceList } from "@/src/schemas";
 import { getAvailableHours } from "@/src/services/available-hours";
+import { getDateToday } from "@/src/utils";
+import useSWR from "swr";
+import { fetcher } from "@/src/utils/fetcher";
 type TimeArraySchema = string[];
 
 export default function CalendarFormEvent({ appointment }: { appointment?: Appointment }) {
 
-    const [service, setService] = useState<DraftServiceList>([])
-    const [availableHours, setAvailableHours] = useState<TimeArraySchema>([])
+    //const [service, setService] = useState<DraftServiceList>([])
+    //const [availableHours, setAvailableHours] = useState<TimeArraySchema>([])
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
 
     //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
+
+    const { date } = getDateToday()
     /*if (appointment?.date) {
         const availableHours = await getAvailableHours(appointment.date);
     }*/
     //console.log('Appointment form event', appointment)
-    useEffect(() => {
+    /*useEffect(() => {
         const loadAvailableHours = async () => {
             const dateToUse = appointment?.date || selectedDate;
             if (!dateToUse) return;
@@ -36,14 +41,39 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
         };
 
         loadAvailableHours();
-    }, [appointment, selectedDate]);
+    }, [appointment, selectedDate]);*/
     //console.log(availableHours)
+
+    const dateToUse = appointment?.date || selectedDate
+
+    const { data: availableHours, error, isLoading } = useSWR<TimeArraySchema>(
+        dateToUse ? `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/available-hours/${dateToUse}` : null,
+        fetcher
+    )
+
     useEffect(() => {
+        if (error) {
+            console.error('Error cargando las horas disponibles:', error);
+        }
+    }, [error]);
+
+    const { data: service, error: errorService, isLoading: isLoadingService } = useSWR<DraftServiceList>(
+        `${process.env.NEXT_PUBLIC_URL}/admin/api/services`,
+        fetcher
+    )
+    
+    useEffect(() => {
+        if (errorService) {
+            console.error('Error cargando los servicios disponibles:', errorService);
+        }
+    }, [errorService]);
+
+    /*useEffect(() => {
         const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services`
         fetch(url)
             .then(res => res.json())
             .then(data => setService(data))
-    }, [])
+    }, [])*/
 
     return (
         <>
@@ -55,6 +85,7 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
                     onChange={(e) => setSelectedDate(e.target.value)}
                     className="w-full border border-gray-300 p-3 rounded-lg"
                     name="date"
+                    min={date}
                     defaultValue={appointment?.date}
                 />
             </div>

@@ -2,6 +2,7 @@
 
 import getToken from "@/src/auth/token"
 import { Appointment, DraftAppointmentSchema, ErrorResponseSchema, Service, SuccessSchema } from "@/src/schemas"
+import { revalidatePath, revalidateTag } from "next/cache"
 
 type AppointmentIdAndServiceIdType = {
     appointmentId: Appointment['id']
@@ -18,9 +19,9 @@ export default async function editAppointment({appointmentId, serviceId} : Appoi
     const appointmentData = {
         date: formData.get('date'),
         start_time: formData.get('start_time'),
-        serviceId: formData.get('serviceId')
+        serviceId: formData.get('serviceId'),
     }
-    console.log(appointmentData)
+    //console.log(appointmentData)
     const appointment = DraftAppointmentSchema.safeParse(appointmentData)
     if(!appointment.success) {
         return {
@@ -51,8 +52,10 @@ export default async function editAppointment({appointmentId, serviceId} : Appoi
             success: ''
         }
     }
-    //revalidateTag('/all-budgets')
+    
     const success = SuccessSchema.parse(json)
+
+    revalidateTag('all-calendars')
 
     return {
         errors: [],

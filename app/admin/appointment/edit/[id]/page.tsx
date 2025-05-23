@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import EditCalendarFormEvent from "@/app/components/appointment/EditAppointmentForm"
-import { getAppointment } from "@/src/services/appointment"
+import { getAppointmentId } from "@/src/services/appointmentId"
 //import { getBudget } from "@/src/services/budgets"
 
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function EditAppointmentPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
 
-    const appointment = await getAppointment(id)
+    const appointment = await getAppointmentId(id)
 
     const appointmentCleaned = {
         ...appointment,
