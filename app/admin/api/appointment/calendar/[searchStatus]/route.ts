@@ -26,7 +26,7 @@ export async function GET(request: Request, { params }: { params: { searchStatus
     }
 
     const calendar = CalendarsAPIResponseSchema.parse(json)
-
+    console.log(calendar)
     const calendarWithStringIds = calendar.map(item => ({
         ...item,
         id: String(item.id),

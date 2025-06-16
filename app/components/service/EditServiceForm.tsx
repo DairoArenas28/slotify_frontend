@@ -26,7 +26,7 @@ export default function EditServiceForm({closeModal} : {closeModal: () => void})
     
         useEffect(() => {
             const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services/${serviceId}`
-            console.log('URL: ',url)
+            //console.log('URL: ',url)
             fetch(url)
                 .then(res => res.json())
                 .then(data => setService(data))

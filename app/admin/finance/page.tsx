@@ -9,7 +9,7 @@ export default async function FinancePage() {
         ...chartData, 
         chartData: []
     }
-    console.log(removeChartData)
+    //console.log(removeChartData)
     return (
         <>
             <div  className="flex-row gap-3">
