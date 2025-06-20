@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import EditCalendarFormEvent from "@/app/components/appointment/EditAppointmentForm"
+import EditAppointmentForm from "@/app/components/appointment/EditAppointmentForm"
 import { getAppointmentId } from "@/src/services/appointmentId"
 //import { getBudget } from "@/src/services/budgets"
 
@@ -45,7 +45,7 @@ export default async function EditAppointmentPage({ params }: { params: Promise<
                 </Link>
             </div>
             <div className='p-10 mt-10  shadow-lg border '>
-                <EditCalendarFormEvent
+                <EditAppointmentForm
                     appointment={appointment}
                 />
             </div>

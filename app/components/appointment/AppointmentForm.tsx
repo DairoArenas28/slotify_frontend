@@ -8,12 +8,13 @@ import useSWR from "swr";
 import { fetcher } from "@/src/utils/fetcher";
 type TimeArraySchema = string[];
 
-export default function CalendarFormEvent({ appointment }: { appointment?: Appointment }) {
+export default function AppointmentForm({ appointment }: { appointment?: Appointment }) {
 
     //const [service, setService] = useState<DraftServiceList>([])
     //const [availableHours, setAvailableHours] = useState<TimeArraySchema>([])
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
+    const [status, setStatus] = useState(appointment?.status || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
 
     //console.log(appointment?.date)
@@ -122,6 +123,24 @@ export default function CalendarFormEvent({ appointment }: { appointment?: Appoi
                     ))}
                 </select>
             </div>
+            { appointment ? (
+                <div className="flex flex-col gap-2">
+                <label className="font-bold text-2xl" htmlFor="serviceId">Estado</label>
+                <select
+                    id="status"
+                    name="status"
+                    className="w-full border border-gray-300 p-3 rounded-lg"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                >
+                    <option value="">Selecciona un estado</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="reservado">Reservador</option>
+                    <option value="cancelado">Cancelado</option>
+                    <option value="completado">Completado</option>
+                </select>
+            </div>
+            ) : (<></>) }
         </>
     );
 };

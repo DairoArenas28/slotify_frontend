@@ -46,7 +46,8 @@ export const ErrorResponseSchema = z.object({
 export const UserSchema = z.object({
     id: z.number(),
     name: z.string(),
-    email: z.string().email()
+    email: z.string().email(),
+    role: z.string()
 })
 
 export const ServiceSchema = z.object({
@@ -72,6 +73,7 @@ export const AppointmentSchema = z.object({
     }),
     start_time: z.string(),
     serviceId: z.number().min(1, { message: "Servicio es requerido" }),
+    status: z.string().optional()
 });
 
 export const DraftAppointmentSchema = z.object({
@@ -80,6 +82,7 @@ export const DraftAppointmentSchema = z.object({
     }),
     start_time: z.string(),
     serviceId: z.string().min(1, { message: "Servicio es requerido" }),
+    status: z.string().optional() 
 })
 
 export const DraftServiceSchema = z.object({

@@ -5,7 +5,7 @@ import { useActionState, useEffect } from "react"
 import ErrorMessage from "../ui/ErrorMessage"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
-import CalendarFormEvent from "./AppointmentForm"
+import AppointmentForm from "./AppointmentForm"
 import { Appointment } from "@/src/schemas"
 import editAppointment from "@/actions/edit-appointment-action"
 
@@ -36,7 +36,7 @@ export default function EditAppointmentForm({appointment}: {appointment: Appoint
         >
             {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
 
-            <CalendarFormEvent
+            <AppointmentForm
                 appointment={appointment}
             />
 

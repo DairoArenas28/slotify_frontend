@@ -20,6 +20,7 @@ export default async function editAppointment({appointmentId, serviceId} : Appoi
         date: formData.get('date'),
         start_time: formData.get('start_time'),
         serviceId: formData.get('serviceId'),
+        status: formData.get('status')
     }
     //console.log(appointmentData)
     const appointment = DraftAppointmentSchema.safeParse(appointmentData)
@@ -39,7 +40,8 @@ export default async function editAppointment({appointmentId, serviceId} : Appoi
         body: JSON.stringify({
             date: appointment.data.date,
             start_time: appointment.data.start_time,
-            serviceId: +appointment.data.serviceId
+            serviceId: +appointment.data.serviceId,
+            status: appointment.data.status
         })
     })
 
