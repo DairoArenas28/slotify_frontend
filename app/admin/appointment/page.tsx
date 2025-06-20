@@ -1,3 +1,4 @@
+import AddCalendarButton from "@/app/components/appointment/AddCalendarButton";
 import CardAppointment from "@/app/components/appointment/CardAppointment";
 
 
@@ -7,7 +8,7 @@ export default function AppointmentPage() {
         <>
             <div className="flex-row">
                 <div className="flex justify-end items-end my-5">
-                    Boton Agregar
+                    <AddCalendarButton/>
                 </div>
                 <div>
                     <CardAppointment />

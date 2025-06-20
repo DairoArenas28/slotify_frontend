@@ -72,8 +72,16 @@ export const AppointmentSchema = z.object({
         message: "Formato inválido",
     }),
     start_time: z.string(),
+    end_time: z.string(),
     serviceId: z.number().min(1, { message: "Servicio es requerido" }),
-    status: z.string().optional()
+    status: z.string().optional(),
+    service: z.object({
+        id: z.number(),
+        name: z.string(),
+        description: z.string(),
+        duration_minutes: z.number(),
+        price: z.string()
+    }),
 });
 
 export const DraftAppointmentSchema = z.object({
@@ -121,6 +129,7 @@ export const CalendarsAPIResponseSchema = z.array(CalendarAPIResponseSchema)
 export const ServicesAPIResponseSchema = z.array(ServiceSchema)
 
 export const CalendarListSchema = z.array(CalendarAPIResponseSchema)
+export const AppointmentListSchema = z.array(AppointmentSchema);
 
 export const FinanceDataWithoutChartSchema = FinanceDataSchema.omit({ chartData: true });
 export type FinanceDataWithoutChart = z.infer<typeof FinanceDataWithoutChartSchema>;
