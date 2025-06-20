@@ -14,7 +14,7 @@ export default async function createAppointment(prevState: ActionStateType, form
         start_time: formData.get('start_time'),
         serviceId: formData.get('serviceId')
     }
-    console.log(appointmentData)
+    //console.log(appointmentData)
     const register = DraftAppointmentSchema.safeParse(appointmentData)
 
     if (!register.success) {

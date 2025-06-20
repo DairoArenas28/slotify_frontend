@@ -56,7 +56,7 @@ export default function Calendar({ calendars }: Props) {
             color,
         };
     });
-    console.log(formattedCalendars)
+    //console.log(formattedCalendars)
     return (
         <div className="w-full h-screen overflow-auto md:overflow-visible">
             <div className="min-w-[900px] min-h-[600px] md:min-w-full md:min-h-full">
