@@ -25,7 +25,7 @@ export default function CardFinance({financeData}: TypeProps) {
                 {/* Derecha */}
                 <div className="text-right">
                     <p className="text-sm text-gray-600">Top servicio</p>
-                    <p className="text-base font-medium text-gray-900">{financeData.topService.name}</p>
+                    <p className="text-base font-medium text-gray-900">{financeData.topService?.name}</p>
                 </div>
             </div>
             <div>

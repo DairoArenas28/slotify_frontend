@@ -113,7 +113,7 @@ export const FinanceDataSchema = z.object({
   topService: z.object({
     name: z.string(),
     count: z.number().int(),
-  }),
+  }).optional(),
   chartData: ChartDataSchema, // <-- Aquí está la corrección
 });
 
