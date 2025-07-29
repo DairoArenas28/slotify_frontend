@@ -118,6 +118,7 @@ export const FinanceDataSchema = z.object({
 });
 
 export type User = z.infer<typeof UserSchema>
+export type Finance = z.infer<typeof FinanceDataSchema>
 export type Service = z.infer<typeof ServiceSchema>
 export type Appointment = z.infer<typeof AppointmentSchema>
 

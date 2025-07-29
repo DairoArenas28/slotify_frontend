@@ -16,7 +16,7 @@ export default function DeleteServiceForm({ closeModal }: DeleteServiceForm) {
     if (!serviceId) {
         throw new Error("Missing budget ID or expense ID");
     }
-    console.log("serviceId", serviceId)
+    //console.log("serviceId", serviceId)
     const deleteServiceWithId = deleteService.bind(null, +serviceId)
     const [state, dispatch] = useActionState(deleteServiceWithId, {
         errors: [],

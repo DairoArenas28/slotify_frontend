@@ -7,7 +7,7 @@ interface AuthRoleProps {
 }
 
 export default function AuthRole({user, children} : AuthRoleProps) {
-    console.log(user)
+    //console.log(user)
     return user.role === "admin" ? <>{children}</> : null
     
 }

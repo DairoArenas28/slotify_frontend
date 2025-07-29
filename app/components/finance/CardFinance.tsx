@@ -1,14 +1,21 @@
+"use client"
 import { FinanceDataWithoutChart } from "@/src/schemas";
+import { useFinanceStore } from "@/src/store/useFinanceStore";
 import { formatCurrent } from "@/src/utils";
 
-type TypeProps = {
-    financeData: FinanceDataWithoutChart
-}
 
-export default function CardFinance({financeData}: TypeProps) {
-    console.log("Desde FInanzas card ", financeData)
+
+export default function CardFinance() {
+    const { finance: financeData } = useFinanceStore()
+    
+    //console.log("FInance ",financeData)
+    //console.log("Desde FInanzas card ", financeData)
+    if (!financeData) {
+        return <p className="text-center text-gray-500">Cargando finanzas...</p>;
+    }
+
     return (
-        <div className="bg-white w-full mt-5 max-w-6xl mx-auto p-6 rounded-2xl shadow-md border border-gray-200">
+        <div className="bg-white w-full max-w-6xl mx-auto p-6 rounded-2xl shadow-md border border-gray-200">
             <div className="flex justify-between items-start">
                 {/* Izquierda */}
                 <div className="flex flex-col gap-1">

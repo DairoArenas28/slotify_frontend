@@ -36,7 +36,7 @@ export default function CalendarPanel({ initialStatus }: Props) {
     const { data: calendars, error, isLoading } = useSWR<DraftCalendarList[]>(url, fetcher);
 
     //await mutate();
-    console.log(error)
+    //console.log(error)
     return (
         <>
             <div className="flex flex-row justify-end gap-3 my-3">

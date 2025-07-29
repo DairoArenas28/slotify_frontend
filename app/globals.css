@@ -11,6 +11,24 @@
   --color-oro-suave: #D4AF37;
 }
 
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: inherit;
+  color: #111827; 
+}
+
+.react-calendar__tile--active {
+  background-color: #3b82f6 !important; /* blue-500 */
+  color: white !important;
+  border-radius: 0.5rem;
+}
+
+.react-calendar__tile--now {
+  background-color: #f3f4f6 !important; /* gray-100 */
+  color: #1f2937 !important; /* gray-800 */
+}
+
 @theme inline {
   /*--color-background: var(--background);
   --color-foreground: var(--foreground);
