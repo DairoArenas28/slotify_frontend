@@ -52,9 +52,9 @@ export function formatHour(hour: string) {
     date.setHours(Number(hours), Number(minutes), Number(seconds));
 
     const hora = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
     }).format(date);
 
     return hora
@@ -62,7 +62,45 @@ export function formatHour(hour: string) {
 }
 
 export function formatLocalDate(date: Date): string {
-  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  return localDate.toISOString().split("T")[0];
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return localDate.toISOString().split("T")[0];
+}
+
+export function formatHumanDate(
+    dateStr: string,
+    separator: string = "-",
+    mode: "full" | "monthYear" = "full",
+    format: "DMY" | "YMD" = "DMY"
+): string {
+    const parts = dateStr.split(separator).map(Number);
+
+    let day: number, month: number, year: number;
+
+    if (format === "DMY") {
+        [day, month, year] = parts;
+    } else if (format === "YMD") {
+        [year, month, day] = parts;
+    } else {
+        throw new Error("Formato de fecha no válido");
+    }
+
+    const date = new Date(year, month - 1, day); // mes empieza en 0
+
+    if (isNaN(date.getTime())) return "Fecha inválida";
+
+    const fullOptions: Intl.DateTimeFormatOptions = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    };
+
+    const monthYearOptions: Intl.DateTimeFormatOptions = {
+        month: "long",
+        year: "numeric",
+    };
+
+    const options = mode === "full" ? fullOptions : monthYearOptions;
+
+    return date.toLocaleDateString("es-ES", options);
 }
 

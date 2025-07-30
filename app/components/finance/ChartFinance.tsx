@@ -4,13 +4,14 @@ import React, { PureComponent } from "react"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import CustomTooltip from "./CustomTooltip";
 import { useFinanceStore } from "@/src/store/useFinanceStore";
+import { formatHumanDate } from "@/src/utils";
 
 export default function ChartFinance() {
-    const { finance } = useFinanceStore();
+    const { finance, date, type } = useFinanceStore();
 
     return (
         <div className="bg-white w-full h-80 max-w-6xl mx-auto p-6 rounded-2xl shadow-md border border-gray-200">
-            <p className="mb-5">Ingresos</p>
+            <p className="mb-5">Ingresos del {type === "day" ? formatHumanDate(date.toLocaleDateString(), "/", "full") : formatHumanDate(date.toLocaleDateString(), "/", "monthYear", "YMD")}</p>
             <ResponsiveContainer>
                 <LineChart
                     data={finance?.chartData ?? []}

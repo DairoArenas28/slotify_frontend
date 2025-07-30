@@ -13,8 +13,6 @@ export function CardCalendar() {
 
     const { finance, date, setDate, type, setType, loadFinanceData } = useFinanceStore()
 
-    const [activo, setActivo] = useState<'day' | 'month'>('day');
-
     useEffect(() => {
         setDate(date)
         loadFinanceData()
@@ -29,17 +27,20 @@ export function CardCalendar() {
         <input type="month" />
         bg-slate-800
      */
-    console.log(activo)
+    console.log(type)
     return (
         <>
 
             <div className='bg-white w-full max-w-6xl mx-auto p-4 rounded-2xl shadow-md border border-gray-200'>
                 <div className='flex justify-end mb-2'>
                     <button
-                        aria-pressed={activo === 'day'}
-                        onClick={() => setActivo('day')}
+                        aria-pressed={type === 'day'}
+                        onClick={() => {
+                            setType('day')
+                            //setDate(new Date())
+                        }}
                         className={`rounded-md rounded-r-none 
-                        ${activo === 'day'
+                        ${type === 'day'
                             ? 'bg-[#A65F60] text-white'
                             : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
                             py-2 px-4 text-sm border border-[#A65F60]
@@ -50,10 +51,13 @@ export function CardCalendar() {
                     </button>
 
                     <button
-                        aria-pressed={activo === 'month'}
-                        onClick={() => setActivo('month')}
+                        aria-pressed={type === 'month'}
+                        onClick={() => {
+                            setType('month')
+                            //setDate(new Date())
+                        }}
                         className={`rounded-md rounded-l-none 
-                            ${activo === 'month'
+                            ${type === 'month'
                             ? 'bg-[#A65F60] text-white'
                             : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
                             py-2 px-4 text-sm border border-[#A65F60]
@@ -65,7 +69,7 @@ export function CardCalendar() {
 
                 </div>
                 <input
-                    type={`${activo === 'day' ? "date" : "month"}`}
+                    type={`${type === 'day' ? "date" : "month"}`}
                     defaultValue={formatLocalDate(date)}
                     name=""
                     id=""
@@ -92,10 +96,10 @@ export function CardCalendar() {
                                 setDate(newDate); // ✅ actualiza el estado en el store
                             }
                         }}
-                        view={`${activo === "day" ? "month": "year"}`}         // 👈 Muestra vista de meses
-                        minDetail={`${activo === "day" ? "month": "year"}`}     // 👈 Evita cambiar a vista de días
-                        maxDetail={`${activo === "day" ? "month": "year"}`}     // 👈 No permite ir más allá de meses
-
+                        view={`${type === "day" ? "month": "year"}`}         // 👈 Muestra vista de meses
+                        minDetail={`${type === "day" ? "month": "year"}`}     // 👈 Evita cambiar a vista de días
+                        maxDetail={`${type === "day" ? "month": "year"}`}     // 👈 No permite ir más allá de meses
+                        activeStartDate={date}
                     />
                 </div>
 

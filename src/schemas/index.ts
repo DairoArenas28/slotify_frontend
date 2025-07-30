@@ -140,3 +140,4 @@ export type DraftServiceList = z.infer<typeof ServiceListSchema>;
 export type DraftServiceForm = z.infer<typeof ServiceSchema>;
 export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
 export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;
+export type DraftAppointmentList = z.infer<typeof AppointmentListSchema> 

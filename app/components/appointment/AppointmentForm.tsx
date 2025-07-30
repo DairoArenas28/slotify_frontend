@@ -17,7 +17,7 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
     const [status, setStatus] = useState(appointment?.status || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
     
-    console.log(formatHour(selectedHour))
+    //console.log(formatHour(selectedHour))
     //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
 
@@ -96,8 +96,8 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                 id="start_time"
                 name="start_time"
                 className="w-full border border-gray-300 p-3 rounded-lg"
-                value={formatHour(selectedHour)}
-                onChange={(e) => setSelectedHour(formatHour(e.target.value))}
+                defaultValue={selectedHour}
+                onChange={(e) => setSelectedHour(e.target.value)}
             >
                 <option value="">Selecciona una hora</option>
                 {availableHours?.map((hours) => (

@@ -11,6 +11,7 @@ import { DraftCalendarList } from "@/src/schemas";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/src/utils/fetcher";
 import SkeletonLoader from "../ui/SkeletonLoader";
+import CardAppointment from "./CardAppointment";
 
 type Props = {
     initialStatus: string;
@@ -38,24 +39,30 @@ export default function CalendarPanel({ initialStatus }: Props) {
     //await mutate();
     //console.log(error)
     return (
-        <>
-            <div className="flex flex-row justify-end gap-3 my-3">
-                <div className="w-48">
+        <div className="grid grid-cols-1 ">
+            <div className="flex justify-end gap-3 my-3">
+                <div className="hidden lg:w-48 lg:block">
                     <SearchStatusSelect setSelectStatus={setSearchStatus} value={initialStatus} />
                 </div>
-                <div className="">
+                <div className="w-full lg:w-auto">
                     <AddCalendarButton />
                 </div>
             </div>
 
-            <div className="flex flex-col">
-                {isLoading ? (
-                    <SkeletonLoader />
-                    ) : (
-                    <Calendar calendars={calendars ?? []} />
-                )}
-                <DeleteAppointmentModal />
+            <div className="hidden lg:block">
+                <div className="flex flex-col">
+                    {isLoading ? (
+                        <SkeletonLoader />
+                        ) : (
+                        <Calendar calendars={calendars ?? []} />
+                    )}
+                    <DeleteAppointmentModal />
+                </div>
             </div>
-        </>
+
+            <div className="lg:hidden">
+                <CardAppointment />
+            </div>
+        </div>
     );
 }
