@@ -3,11 +3,12 @@ import { FinanceDataSchema } from "@/src/schemas"
 import { useFinanceStore } from "@/src/store/useFinanceStore"
 
 
-export async function GET(request: Request, {params} : {params: {date: string}}) {
+export async function GET(request: Request, {params} : {params: {type: string,date: string}}) {
     const token = await getToken()
 
-    const { date } = params
-    const url = `${process.env.API_URL}/admin/finance?type=day&date=${date}`
+    const { type, date } = params
+    console.log("fetch", type)
+    const url = `${process.env.API_URL}/admin/finance?type=${type}&date=${date}`
 
     const req = await fetch(url, {
         headers: {
