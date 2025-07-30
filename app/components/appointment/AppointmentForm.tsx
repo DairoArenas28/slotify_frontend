@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Appointment, DraftServiceList } from "@/src/schemas";
 import { getAvailableHours } from "@/src/services/available-hours";
-import { getDateToday } from "@/src/utils";
+import { formatHour, getDateToday } from "@/src/utils";
 import useSWR from "swr";
 import { fetcher } from "@/src/utils/fetcher";
 type TimeArraySchema = string[];
@@ -16,7 +16,8 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [status, setStatus] = useState(appointment?.status || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
-
+    
+    console.log(formatHour(selectedHour))
     //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
 
@@ -95,8 +96,8 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                 id="start_time"
                 name="start_time"
                 className="w-full border border-gray-300 p-3 rounded-lg"
-                value={selectedHour}
-                onChange={(e) => setSelectedHour(e.target.value)}
+                value={formatHour(selectedHour)}
+                onChange={(e) => setSelectedHour(formatHour(e.target.value))}
             >
                 <option value="">Selecciona una hora</option>
                 {availableHours?.map((hours) => (
