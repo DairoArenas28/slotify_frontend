@@ -113,11 +113,12 @@ export const FinanceDataSchema = z.object({
   topService: z.object({
     name: z.string(),
     count: z.number().int(),
-  }),
+  }).optional(),
   chartData: ChartDataSchema, // <-- Aquí está la corrección
 });
 
 export type User = z.infer<typeof UserSchema>
+export type Finance = z.infer<typeof FinanceDataSchema>
 export type Service = z.infer<typeof ServiceSchema>
 export type Appointment = z.infer<typeof AppointmentSchema>
 

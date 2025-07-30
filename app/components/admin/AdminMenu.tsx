@@ -5,13 +5,14 @@ import { Bars3Icon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { User } from '@/src/schemas'
 import logout from '@/actions/logout-user-action'
+import AuthRole from '../auth/AuthRole'
 
 export default function AdminMenu({ user }: { user: User }) {
 
   return (
     <Popover className="relative">
       <PopoverButton className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 p-1 rounded-lg bg-[#A65F60]">
-          <Bars3Icon className='w-8 h-8 text-white cursor-pointer' />
+        <Bars3Icon className='w-8 h-8 text-white cursor-pointer' />
       </PopoverButton>
 
       <Transition
@@ -28,29 +29,31 @@ export default function AdminMenu({ user }: { user: User }) {
             <p className='text-center'>Hola: {user.name} </p>
             <p className='text-center'>Rol: {user.role === "client" ? "Cliente" : "Administrador"} </p>
             <Link
-                href='/admin/profile/settings'
-                className='block p-2 hover:text-purple-950'
+              href='/admin/profile/settings'
+              className='block p-2 hover:text-purple-950'
             >Mi Perfil</Link>
             <Link
-                href='/admin/appointment'
-                className='block p-2 hover:text-purple-950'
+              href='/admin/appointment'
+              className='block p-2 hover:text-purple-950'
             >Mis Citas</Link>
-            <Link
+            <AuthRole user={user}>
+              <Link
                 href='/admin/finance                                                                            '
                 className='block p-2 hover:text-purple-950'
-            >Mis Finanzas</Link>
-            <Link
+              >Mis Finanzas</Link>
+              <Link
                 href='/admin/service'
                 className='block p-2 hover:text-purple-950'
-            >Mis Servicios</Link>
+              >Mis Servicios</Link>
+            </AuthRole>
             <button
-                className='block p-2 hover:text-purple-950'
-                type='button'
-                onClick={async () => {
-                    await logout()
-                }}
+              className='block p-2 hover:text-purple-950'
+              type='button'
+              onClick={async () => {
+                await logout()
+              }}
             >
-                Cerrar Sesión
+              Cerrar Sesión
             </button>
           </div>
         </PopoverPanel>
