@@ -17,31 +17,35 @@ export default function CardAppointment() {
             <div className="">
                 <ul role="list" className="divide-y divide-gray-200 rounded-lg border border-gray-300 shadow-xl bg-white">
                     {appointmentUser && appointmentUser.map((appointment) => (
-                    <li key={appointment.id}  className="flex justify-between items-center p-6 hover:bg-gray-50 transition duration-200">
-                        <div className="flex items-start gap-4">
-                            <div className="flex flex-col space-y-2">
-                                <p className="text-2xl font-bold text-[#A65F60]">
-                                    {appointment.service.name}
-                                </p>
-                                <p className="text-lg font-semibold text-[#A3B18A]">
-                                    {formatHumanDate(appointment.date, "-", "full", "YMD")}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                    {appointment.start_time}
-                                    - {appointment.end_time}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                    {appointment.service.description}   
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                    {formatCurrent(+appointment.service.price)}     
-                                </p>
+                        <li key={appointment.id} className="flex justify-between items-center p-6 hover:bg-gray-50 transition duration-200">
+                            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-2 lg:space-y-0 lg:space-x-4">
+                                <div className="grid grid-cols-3 lg:flex lg:flex-col space-y-2">
+                                    <p className="text-2xl font-bold text-[#A65F60]">
+                                        {appointment.service.name}
+                                    </p>
+                                    <p className="text-lg font-semibold text-[#A3B18A]">
+                                        {formatHumanDate(appointment.date, "-", "full", "YMD")}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        {appointment.start_time}
+                                        - {appointment.end_time}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        {formatCurrent(+appointment.service.price)}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        {appointment.service.description}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        <strong>{appointment.status?.toUpperCase()}</strong>
+                                    </p>
+
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex shrink-0 items-center gap-x-6">
-                            
-                        </div>
-                    </li>
+                            <div className="flex shrink-0 items-center gap-x-6">
+
+                            </div>
+                        </li>
                     ))}
                 </ul>
             </div>

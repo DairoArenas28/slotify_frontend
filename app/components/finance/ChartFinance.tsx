@@ -11,7 +11,7 @@ export default function ChartFinance() {
 
     return (
         <div className="bg-white w-full h-80 max-w-6xl mx-auto p-6 rounded-2xl shadow-md border border-gray-200">
-            <p className="mb-5">Ingresos del {type === "day" ? formatHumanDate(date.toLocaleDateString(), "/", "full") : formatHumanDate(date.toLocaleDateString(), "/", "monthYear", "YMD")}</p>
+            <p className="mb-5">Ingresos del {type === "day" ? formatHumanDate(date.toLocaleDateString(), "/", "full", "DMY") : formatHumanDate(date.toLocaleDateString(), "/", "monthYear", "DMY")}</p>
             <ResponsiveContainer>
                 <LineChart
                     data={finance?.chartData ?? []}
