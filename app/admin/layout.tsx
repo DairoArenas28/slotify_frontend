@@ -13,8 +13,6 @@ export default async function AdminLayout({
 
     const { user } = await verifySession()
 
-    //const { setUser } = useUser()
-
     return (
         <>
             <header className='bg-[#FDF6F0] py-5'>
