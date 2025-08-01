@@ -1,13 +1,22 @@
 "use client"
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { User } from '@/src/schemas'
 import logout from '@/actions/logout-user-action'
 import AuthRole from '../auth/AuthRole'
+import { useUser } from '@/src/store/useUser'
+import { useSWRConfig } from "swr"
 
 export default function AdminMenu({ user }: { user: User }) {
+
+  const { setUser } = useUser()
+  const { cache } = useSWRConfig()
+  
+  useEffect(() => {
+    setUser(user)
+  }, [])
 
   return (
     <Popover className="relative">
@@ -47,9 +56,12 @@ export default function AdminMenu({ user }: { user: User }) {
               >Mis Servicios</Link>
             </AuthRole>
             <button
-              className='block p-2 hover:text-purple-950'
+              className='block p-2 hover:text-purple-950 cursor-pointer'
               type='button'
               onClick={async () => {
+                for (const key of cache.keys()) {
+                    cache.delete(key)
+                }
                 await logout()
               }}
             >
