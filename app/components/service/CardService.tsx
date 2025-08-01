@@ -10,9 +10,8 @@ export default async function CardService() {
 
     return (
         <>
-            <div className="">
-                <ul role="list" className="divide-y divide-gray-200 rounded-lg border border-gray-300 shadow-xl bg-white">
-                    {services.map((service) => (
+            <ul role="list" className="divide-y divide-gray-200 rounded-lg border border-gray-300 shadow-xl bg-white">
+                {services.map((service) => (
                     <li key={service.id} className="flex justify-between items-center p-6 hover:bg-gray-50 transition duration-200">
                         <div className="flex items-start gap-4">
                             <div className="flex flex-col space-y-2">
@@ -29,9 +28,8 @@ export default async function CardService() {
                             />
                         </div>
                     </li>
-                    ))}
-                </ul>
-            </div>
+                ))}
+            </ul>
         </>
     )
 }

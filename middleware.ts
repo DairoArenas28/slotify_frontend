@@ -7,12 +7,12 @@ const protectedRoutes = [
     {path: "/admin/service", roles: ['admin']},
 ]
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
 
-    const token = await getToken()
+    //const token = getToken()
 
-    //const token = request.cookies.get('SLOTIFY_TOKEN')?.value
+    const token = request.cookies.get('SLOTIFY_TOKEN')?.value
 
     // Si no hay token, redirige al login
     if (!token) {
@@ -20,6 +20,8 @@ export async function middleware(request: NextRequest) {
     }
 
     const payload = parseJwt(token)
+
+    console.log('Payload:', payload)
 
     const matchedRoute = protectedRoutes.find(route => pathname.startsWith(route.path))
     if(matchedRoute && !matchedRoute.roles.includes(payload.role)){

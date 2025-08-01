@@ -1,0 +1,67 @@
+"use server"
+import getToken from "@/src/auth/token"
+import { ErrorResponseSchema, RegisterSchema, SuccessSchema } from "@/src/schemas"
+
+type ActionStateType = {
+    errors: string[],
+    success: string
+}
+
+export default async function createUser(prevState: ActionStateType, formData: FormData) {
+
+
+
+    const registerData = {
+        email: formData.get("email"),
+        name: formData.get("name"),
+        password: formData.get("password"),
+        password_confirmation: formData.get("password_confirmation")
+    }
+
+    //Validar los datos del formulario
+    const register = RegisterSchema.safeParse(registerData)
+
+    if (!register.success) {
+        const errors = register.error.errors.map(error => error.message)
+        return {
+            errors,
+            success: prevState.success
+        }
+    }
+
+    const token = await getToken()
+
+    //Registrar el usuario en la base de datos
+
+    const url = `${process.env.API_URL}/user`
+    const req = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            email: register.data.email,
+            name: register.data.name,
+            password: register.data.password,
+        })
+    })
+    const json = await req.json()
+
+    if (req.status === 409) {
+        const { error } = ErrorResponseSchema.parse(json)
+
+        return {
+            errors: [error],
+            success: ''
+        }
+    }
+
+    const success = SuccessSchema.parse(json)
+
+    return {
+        errors: [],
+        success
+    }
+}

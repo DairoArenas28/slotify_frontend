@@ -5,11 +5,14 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 import AddServiceForm from '../service/AddServiceForm';
 import EditServiceForm from '../service/EditServiceForm';
 import DeleteServiceForm from '../service/DeleteServiceForm';
+import { AddUserForm } from '../user/AddUserForm';
 
 const componentsMap = {
   "AddService": AddServiceForm,
   "EditService": EditServiceForm,
   "DeleteService": DeleteServiceForm,
+
+  "AddUser": AddUserForm
   //"EditExpense": EditExpenseForm,
   //"DeleteExpense": DeleteExpenseForm
 }
@@ -26,6 +29,8 @@ export default function ModalContainer() {
   const editService = searchParams.get('editService')
   const deleteService = searchParams.get('deleteService')
 
+  const addUser = searchParams.get('addUser')
+
   //console.log('Appointmend Edit', appointmentId)
 
   //console.log(appointment)
@@ -35,6 +40,9 @@ export default function ModalContainer() {
     if (addService) return "AddService"
     if (editService) return "EditService"
     if (deleteService) return "DeleteService"
+
+    if (addUser) return "AddUser"
+
     //if(editExpense) return "EditExpense"
     //if(deleteExpense) return "DeleteExpense"
   }

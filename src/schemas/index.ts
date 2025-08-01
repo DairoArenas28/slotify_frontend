@@ -143,6 +143,7 @@ export const FinanceDataWithoutChartSchema = FinanceDataSchema.omit({ chartData:
 export type FinanceDataWithoutChart = z.infer<typeof FinanceDataWithoutChartSchema>;
 
 export const ServiceListSchema = z.array(ServiceSchema);
+export const UserListSchema = z.array(UserSchema);
 export type DraftServiceList = z.infer<typeof ServiceListSchema>;
 export type DraftServiceForm = z.infer<typeof ServiceSchema>;
 export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
