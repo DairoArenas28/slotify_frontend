@@ -3,7 +3,7 @@ import ToastNotification from "../components/ui/ToastNotification";
 import { verifySession } from "@/src/auth/dal";
 import AdminMenu from "../components/admin/AdminMenu";
 import BrandTitle from "../components/ui/BrandTitle";
-//import { useUser } from "@/src/store/useUser";
+import { useUser } from "@/src/store/useUser";
 
 export default async function AdminLayout({
     children,
