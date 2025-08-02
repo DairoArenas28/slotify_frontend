@@ -41,8 +41,8 @@ export function CardCalendar() {
                         }}
                         className={`rounded-md rounded-r-none 
                         ${type === 'day'
-                            ? 'bg-[#A65F60] text-white'
-                            : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
+                                ? 'bg-[#A65F60] text-white'
+                                : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
                             py-2 px-4 text-sm border border-[#A65F60]
                             transition-all shadow-md `}
                         type="button"
@@ -58,8 +58,8 @@ export function CardCalendar() {
                         }}
                         className={`rounded-md rounded-l-none 
                             ${type === 'month'
-                            ? 'bg-[#A65F60] text-white'
-                            : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
+                                ? 'bg-[#A65F60] text-white'
+                                : 'bg-[#FDF6F0] text-[#A65F60] hover:bg-[#a65f6041]'} 
                             py-2 px-4 text-sm border border-[#A65F60]
                             transition-all shadow-md `}
                         type="button"
@@ -96,9 +96,14 @@ export function CardCalendar() {
                                 setDate(newDate); // ✅ actualiza el estado en el store
                             }
                         }}
-                        view={`${type === "day" ? "month": "year"}`}         // 👈 Muestra vista de meses
-                        minDetail={`${type === "day" ? "month": "year"}`}     // 👈 Evita cambiar a vista de días
-                        maxDetail={`${type === "day" ? "month": "year"}`}     // 👈 No permite ir más allá de meses
+                        onActiveStartDateChange={({ activeStartDate }) => {
+                            if (activeStartDate) {
+                                setDate(activeStartDate);
+                            } // ✅ actualiza el mes o año activo cuando se navega
+                        }}
+                        view={`${type === "day" ? "month" : "year"}`}         // 👈 Muestra vista de meses
+                        minDetail={`${type === "day" ? "month" : "year"}`}     // 👈 Evita cambiar a vista de días
+                        maxDetail={`${type === "day" ? "month" : "year"}`}     // 👈 No permite ir más allá de meses
                         activeStartDate={date}
                     />
                 </div>

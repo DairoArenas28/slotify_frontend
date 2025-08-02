@@ -91,6 +91,15 @@ export const AppointmentAPIResponseSchema = z.object({
     data: z.array(AppointmentSchema)
 })
 
+export const UserAPIResponseSchema = z.object({
+    total: z.number(),
+    page: z.number(),
+    totalPages: z.number(),
+    data: z.array(UserSchema)
+})
+
+
+
 export const DraftAppointmentSchema = z.object({
     date: z.string().refine(val => !isNaN(Date.parse(val)), {
         message: "Formato inválido",
@@ -149,3 +158,4 @@ export type DraftServiceForm = z.infer<typeof ServiceSchema>;
 export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
 export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;
 export type DraftAppointment = z.infer<typeof AppointmentAPIResponseSchema> 
+export type DraftUser = z.infer<typeof UserAPIResponseSchema> 

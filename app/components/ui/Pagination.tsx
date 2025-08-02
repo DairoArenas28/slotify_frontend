@@ -15,7 +15,7 @@ export default function Pagination({ page, totalPages, baseUrl }: PaginationProp
     const prevPage = Math.max(page - 1, 1);
 
     return (
-        <nav className="flex justify-center py-10 ">
+        <nav className="flex justify-center py-6 ">
             {page > 1 && (
                 <Link
                     href={`${baseUrl}?page=${prevPage}`}

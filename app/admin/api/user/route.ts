@@ -1,5 +1,5 @@
 import getToken from "@/src/auth/token"
-import { AppointmentAPIResponseSchema } from "@/src/schemas"
+import { UserAPIResponseSchema } from "@/src/schemas"
 import { notFound } from "next/navigation"
 
 
@@ -10,13 +10,13 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get('page') || '1');
 
     const token = await getToken()
-    const url = `${process.env.API_URL}/appointment/user?limit=${limit}&page=${page}`
+    const url = `${process.env.API_URL}/user/paginationAll?limit=${limit}&page=${page}`
     const req = await fetch(url, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
         next: {
-            tags: ['all-appointmentUserAll']
+            tags: ['all-userPaginationAll']
         }
     })
 
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
         notFound()
     }
 
-    const appointment = AppointmentAPIResponseSchema.parse(json)
+    const appointment = UserAPIResponseSchema.parse(json)
 
     return Response.json(appointment)
 }
