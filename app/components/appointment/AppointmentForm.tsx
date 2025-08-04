@@ -16,7 +16,7 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [status, setStatus] = useState(appointment?.status || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
-    
+
     //console.log(formatHour(selectedHour))
     //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
@@ -63,7 +63,7 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
         `${process.env.NEXT_PUBLIC_URL}/admin/api/services`,
         fetcher
     )
-    
+
     useEffect(() => {
         if (errorService) {
             console.error('Error cargando los servicios disponibles:', errorService);
@@ -124,24 +124,24 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                     ))}
                 </select>
             </div>
-            { appointment ? (
+            {appointment ? (
                 <div className="flex flex-col gap-2">
-                <label className="font-bold text-2xl" htmlFor="serviceId">Estado</label>
-                <select
-                    id="status"
-                    name="status"
-                    className="w-full border border-gray-300 p-3 rounded-lg"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                >
-                    <option value="">Selecciona un estado</option>
-                    <option value="disponible">Disponible</option>
-                    <option value="reservado">Reservador</option>
-                    <option value="cancelado">Cancelado</option>
-                    <option value="completado">Completado</option>
-                </select>
-            </div>
-            ) : (<></>) }
+                    <label className="font-bold text-2xl" htmlFor="serviceId">Estado</label>
+                    <select
+                        id="status"
+                        name="status"
+                        className="w-full border border-gray-300 p-3 rounded-lg"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                    >
+                        <option value="">Selecciona un estado</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="reservado">Reservador</option>
+                        <option value="cancelado">Cancelado</option>
+                        <option value="completado">Completado</option>
+                    </select>
+                </div>
+            ) : (<></>)}
         </>
     );
 };

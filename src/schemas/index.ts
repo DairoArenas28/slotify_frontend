@@ -116,6 +116,18 @@ export const DraftServiceSchema = z.object({
     price: z.number()
 })
 
+export const DraftCustomerSchema = z.object({
+    first_name: z.string().min(1,{ message: "El nombre es requerido" }),
+    last_name: z.string(),
+    email: z.string().email(),
+    phone: z.string(),
+    document_type: z.number(),
+    document_number: z.string(),
+    address: z.string(),
+    country: z.string(),
+    birth_date: z.date()
+})
+
 export const ChartDataSchema = z.array(
   z.object({
     label: z.string(), // o usa .regex(/^\d+$/) si esperas solo números
