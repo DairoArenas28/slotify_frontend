@@ -6,15 +6,15 @@ import ErrorMessage from "../ui/ErrorMessage"
 import { toast } from "react-toastify"
 
 
-export default function AddServiceForm({closeModal} : {closeModal: () => void}) {
+export default function AddServiceForm({ closeModal }: { closeModal: () => void }) {
 
-   const [state, dispatch] = useActionState(createService, {
+    const [state, dispatch] = useActionState(createService, {
         errors: [],
         success: ''
     })
 
     useEffect(() => {
-        if(state.success){
+        if (state.success) {
             toast.success(state.success)
             closeModal()
         }
@@ -22,11 +22,11 @@ export default function AddServiceForm({closeModal} : {closeModal: () => void}) 
 
     return (
         <>
-         <DialogTitle
+            <DialogTitle
                 as="h3"
                 className="font-black text-4xl text-[#C08081] my-5"
             >
-                Editar servicio
+                Crear servicio
             </DialogTitle>
 
             <p className="text-xl font-bold">Llena el formulario y crea un {''}
@@ -38,7 +38,7 @@ export default function AddServiceForm({closeModal} : {closeModal: () => void}) 
                 noValidate
                 action={dispatch}
             >
-                <ServiceForm  />
+                <ServiceForm />
 
                 <input
                     type="submit"

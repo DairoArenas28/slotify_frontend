@@ -1,7 +1,7 @@
 import { useActionState, useEffect } from "react";
-import { RegisterFormContent } from "../auth/RegisterFormContent";
 import createUser from "@/actions/user/create-user-action";
 import { toast } from "react-toastify";
+import { UserForm } from "./UserForm";
 
 
 export function AddUserForm({ closeModal }: { closeModal: () => void }) {
@@ -20,7 +20,7 @@ export function AddUserForm({ closeModal }: { closeModal: () => void }) {
 
     return (
         <form action={dispatch} className="mt-14 space-y-5">
-            <RegisterFormContent />
+            <UserForm />
             <input
                 type="submit"
                 value="Agregar"

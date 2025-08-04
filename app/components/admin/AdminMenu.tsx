@@ -51,6 +51,10 @@ export default function AdminMenu({ user }: { user: User }) {
                 className='block p-2 hover:text-purple-950'
               >Mis Finanzas</Link>
               <Link
+                href='/admin/customer'
+                className='block p-2 hover:text-purple-950'
+              >Mis Clientes</Link>
+              <Link
                 href='/admin/user'
                 className='block p-2 hover:text-purple-950'
               >Mis Usuarios</Link>
