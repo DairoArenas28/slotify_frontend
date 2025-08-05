@@ -1,50 +1,25 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Appointment, DraftServiceList } from "@/src/schemas";
+import { Appointment, DraftCustomerList, DraftServiceList } from "@/src/schemas";
 import { getAvailableHours } from "@/src/services/available-hours";
 import { formatHour, getDateToday } from "@/src/utils";
 import useSWR from "swr";
 import { fetcher } from "@/src/utils/fetcher";
 type TimeArraySchema = string[];
+import Select from 'react-select';
+import CustomSelect from "../ui/CustomSelect";
 
 export default function AppointmentForm({ appointment }: { appointment?: Appointment }) {
 
-    //const [service, setService] = useState<DraftServiceList>([])
-    //const [availableHours, setAvailableHours] = useState<TimeArraySchema>([])
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [status, setStatus] = useState(appointment?.status || "");
     const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
 
-    //console.log(formatHour(selectedHour))
-    //console.log(appointment?.date)
     const ref = useRef<HTMLFormElement>(null)
 
     const { date } = getDateToday()
-    /*if (appointment?.date) {
-        const availableHours = await getAvailableHours(appointment.date);
-    }*/
-    //console.log('Appointment form event', appointment)
-    /*useEffect(() => {
-        const loadAvailableHours = async () => {
-            const dateToUse = appointment?.date || selectedDate;
-            if (!dateToUse) return;
-
-            const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/appointment/available-hours/${dateToUse}`;
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-                setAvailableHours([])
-                setAvailableHours(data);
-            } catch (error) {
-                console.error('Error cargando las horas disponibles:', error);
-            }
-        };
-
-        loadAvailableHours();
-    }, [appointment, selectedDate]);*/
-    //console.log(availableHours)
 
     const dateToUse = appointment?.date || selectedDate
 
@@ -59,7 +34,7 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
         }
     }, [error]);
 
-    const { data: service, error: errorService, isLoading: isLoadingService } = useSWR<DraftServiceList>(
+    const { data: services, error: errorService, isLoading: isLoadingService } = useSWR<DraftServiceList>(
         `${process.env.NEXT_PUBLIC_URL}/admin/api/services`,
         fetcher
     )
@@ -70,60 +45,77 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
         }
     }, [errorService]);
 
-    /*useEffect(() => {
-        const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/services`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setService(data))
-    }, [])*/
+    const url = `${process.env.NEXT_PUBLIC_URL}/admin/api/customer`
+    const { data: customers, error: errorCustomer, isLoading: isLoadingCustomer } = useSWR<DraftCustomerList[]>(url, fetcher)
+
+    const customerOptions = (customers ?? [])
+        .filter((customer) => customer.id !== undefined)
+        .map((customer) => ({
+            value: customer.id!,
+            label: `${customer.document_number} - ${customer.first_name} ${customer.last_name}`,
+        }));
+
+    const availableHoursOptions = (availableHours ?? []).map((availableHour) => ({
+        value: availableHour,
+        label: availableHour,
+    }));
+
+    const serviceOptions = (services ?? []).map((service) => ({
+        value: service.id,
+        label: service.name,
+    }));
+
+    const defaultServiceOption = serviceOptions.find(
+        (option) => option.value === selectedService
+    );
 
     return (
         <>
+            {customerOptions.length > 0 && (
+                <CustomSelect
+                    label="Cliente"
+                    name="customerId"
+                    options={customerOptions}
+                    placeholder="Selecciona un cliente"
+                    onChange={(selected) => console.log(selected)}
+                />
+            )}
+
             <div className="flex flex-col gap-2">
                 <label className="font-bold text-2xl" htmlFor="date">Fecha</label>
                 <input
                     id="date"
                     type="date"
                     onChange={(e) => setSelectedDate(e.target.value)}
-                    className="w-full border border-gray-300 p-3 rounded-lg"
+                    className="w-full border border-gray-300 text-[#9ca3af] p-3 rounded-lg"
                     name="date"
                     min={date}
                     defaultValue={appointment?.date}
                 />
             </div>
 
-            <select
-                id="start_time"
-                name="start_time"
-                className="w-full border border-gray-300 p-3 rounded-lg"
-                defaultValue={selectedHour}
-                onChange={(e) => setSelectedHour(e.target.value)}
-            >
-                <option value="">Selecciona una hora</option>
-                {availableHours?.map((hours) => (
-                    <option className="text-gray-800 bg-white font-medium" key={hours} value={hours}>
-                        {hours}
-                    </option>
-                ))}
-            </select>
+            {availableHoursOptions.length > 0 && (
+                <CustomSelect
+                    label=""
+                    name="start_time"
+                    inputId="start_time"
+                    options={availableHoursOptions}
+                    placeholder="Selecciona una hora"
+                    onChange={(selected) => console.log(selected)}
+                />
+            )}
 
-            <div className="flex flex-col gap-2">
-                <label className="font-bold text-2xl" htmlFor="serviceId">Servicio</label>
-                <select
-                    id="serviceId"
+            {serviceOptions.length > 0 && (
+                <CustomSelect
+                    label="Servicio"
                     name="serviceId"
-                    className="w-full border border-gray-300 p-3 rounded-lg"
-                    value={selectedService}
-                    onChange={(e) => setSelectedService(Number(e.target.value))}
-                >
-                    <option value="">Selecciona un servicio</option>
-                    {service?.map((s: { id: number; name: string }) => (
-                        <option className="text-gray-800 bg-white font-medium" key={s.id} value={s.id}>
-                            {s.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    options={serviceOptions}
+                    placeholder="Selecciona un servicio"
+                    defaultValue={defaultServiceOption}
+                    onChange={(seleted) => setSelectedService(Number(seleted))}
+                />
+            )}
+
             {appointment ? (
                 <div className="flex flex-col gap-2">
                     <label className="font-bold text-2xl" htmlFor="serviceId">Estado</label>
