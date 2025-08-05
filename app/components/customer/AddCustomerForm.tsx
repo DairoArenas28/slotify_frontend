@@ -3,6 +3,7 @@ import CustomerForm from "./CustomerForm";
 import { useActionState, useEffect } from "react";
 import createCustomer from "@/actions/customer/create-customer-action";
 import { toast } from "react-toastify";
+import ErrorMessage from "../ui/ErrorMessage";
 
 
 
@@ -38,6 +39,8 @@ export function AddCustomerForm({ closeModal }: { closeModal: () => void }) {
                 noValidate
                 action={dispatch}
             >
+                {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
+                
                 <CustomerForm />
 
                 <input

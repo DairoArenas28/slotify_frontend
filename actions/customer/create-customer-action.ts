@@ -1,6 +1,8 @@
 "use server"
 import getToken from "@/src/auth/token"
-import { DraftCustomerSchema, DraftServiceSchema, ErrorResponseSchema, SuccessSchema } from "@/src/schemas"
+import { CustomerSchema, ErrorResponseSchema, SuccessSchema } from "@/src/schemas"
+import { getLocalDateFromForm } from "@/src/utils"
+import { revalidatePath } from "next/cache"
 
 type ActionStateType = {
     errors: string[]
@@ -8,7 +10,7 @@ type ActionStateType = {
 }
 
 export default async function createCustomer(prevState: ActionStateType, formData: FormData) {
-    //console.log(formData)
+    console.log(formData.get('birth_date'))
     const customerData = {
         first_name: formData.get('first_name'),
         last_name: formData.get('last_name'),
@@ -18,12 +20,12 @@ export default async function createCustomer(prevState: ActionStateType, formDat
         document_number: formData.get('document_number'),
         address: formData.get('address'),
         country: formData.get('country'),
-        birth_date: formData.get('birth_date')
+        birth_date: getLocalDateFromForm(formData, 'birth_date')
     }
 
     console.log(customerData)
 
-    const register = DraftCustomerSchema.safeParse(customerData)
+    const register = CustomerSchema.safeParse(customerData)
 
     if (!register.success) {
         const errors = register.error.errors.map(error => error.message)
@@ -77,6 +79,8 @@ export default async function createCustomer(prevState: ActionStateType, formDat
     }
 
     const success = SuccessSchema.parse(json)
+
+    revalidatePath('/admin/customer')
 
     return {
         errors: [],

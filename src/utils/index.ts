@@ -104,3 +104,15 @@ export function formatHumanDate(
     return date.toLocaleDateString("es-ES", options);
 }
 
+export function getLocalDateFromForm(formData: FormData, fieldName: string): Date | null {
+    const raw = formData.get(fieldName)?.toString();
+    if (!raw) return null;
+
+    const [year, month, day] = raw.split("-").map(Number);
+
+    if (!year || !month || !day) return null;
+
+    // Construye la fecha como local (sin desfase horario)
+    return new Date(year, month - 1, day);
+}
+

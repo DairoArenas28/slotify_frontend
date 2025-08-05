@@ -19,7 +19,7 @@ export default function CustomerForm() {
       >
         <div className="mb-5">
           <label htmlFor="first_name" className="text-sm uppercase font-bold">Nombre</label>
-          <input id="name" name="name" className="w-full p-3 border border-gray-100 bg-white" placeholder="Nombre" />
+          <input id="first_name" name="first_name" className="w-full p-3 border border-gray-100 bg-white" placeholder="Nombre" />
         </div>
         <div className="mb-5">
           <label htmlFor="last_name" className="text-sm uppercase font-bold">Apellido</label>

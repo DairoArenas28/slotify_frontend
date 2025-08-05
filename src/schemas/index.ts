@@ -106,7 +106,7 @@ export const DraftAppointmentSchema = z.object({
     }),
     start_time: z.string(),
     serviceId: z.string().min(1, { message: "Servicio es requerido" }),
-    status: z.string().optional() 
+    status: z.string().optional()
 })
 
 export const DraftServiceSchema = z.object({
@@ -116,33 +116,48 @@ export const DraftServiceSchema = z.object({
     price: z.number()
 })
 
-export const DraftCustomerSchema = z.object({
-    first_name: z.string().min(1,{ message: "El nombre es requerido" }),
+export const CustomerSchema = z.object({
+    id: z.number().optional(),
+    first_name: z.string().min(1, { message: "El nombre es requerido" }),
     last_name: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
+    email: z.preprocess(
+        (val) => val === '' ? undefined : val,
+        z.string().email().optional()
+    ),
+    phone: z.string().min(1, { message: "El telefono es requerido" }),
     document_type: z.number(),
     document_number: z.string(),
     address: z.string(),
     country: z.string(),
-    birth_date: z.date()
+    birth_date: z.preprocess(
+        (val) => {
+            if (typeof val === "string" && val !== "") {
+                const [y, m, d] = val.split("-").map(Number);
+                return new Date(y, m - 1, d); // mes inicia en 0
+            }
+            return undefined; // si está vacío o mal, será undefined
+        },
+        z.date().optional()
+    )
+
+    //z.date().optional()
 })
 
 export const ChartDataSchema = z.array(
-  z.object({
-    label: z.string(), // o usa .regex(/^\d+$/) si esperas solo números
-    amount: z.number(),
-  })
+    z.object({
+        label: z.string(), // o usa .regex(/^\d+$/) si esperas solo números
+        amount: z.number(),
+    })
 );
 
 export const FinanceDataSchema = z.object({
-  totalEarnings: z.number(),
-  completedAppointments: z.number().int(),
-  topService: z.object({
-    name: z.string(),
-    count: z.number().int(),
-  }).optional(),
-  chartData: ChartDataSchema, // <-- Aquí está la corrección
+    totalEarnings: z.number(),
+    completedAppointments: z.number().int(),
+    topService: z.object({
+        name: z.string(),
+        count: z.number().int(),
+    }).optional(),
+    chartData: ChartDataSchema, // <-- Aquí está la corrección
 });
 
 export type User = z.infer<typeof UserSchema>
@@ -169,5 +184,6 @@ export type DraftServiceList = z.infer<typeof ServiceListSchema>;
 export type DraftServiceForm = z.infer<typeof ServiceSchema>;
 export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
 export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;
-export type DraftAppointment = z.infer<typeof AppointmentAPIResponseSchema> 
+export type DraftAppointment = z.infer<typeof AppointmentAPIResponseSchema>
 export type DraftUser = z.infer<typeof UserAPIResponseSchema> 
+export type DraftCustomerList = z.infer<typeof CustomerSchema> 
