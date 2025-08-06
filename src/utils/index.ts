@@ -44,7 +44,8 @@ export function getDateToday() {
 
 }
 
-export function formatHour(hour: string) {
+export function formatHour(hour?: string) {
+    if (!hour) return '';
 
     const [hours, minutes, seconds] = hour.split(":");
 
@@ -57,8 +58,7 @@ export function formatHour(hour: string) {
         hour12: true,
     }).format(date);
 
-    return hora
-
+    return hora;
 }
 
 export function formatLocalDate(date: Date): string {
@@ -109,6 +109,17 @@ export function getLocalDateFromForm(formData: FormData, fieldName: string): Dat
     if (!raw) return null;
 
     const [year, month, day] = raw.split("-").map(Number);
+
+    if (!year || !month || !day) return null;
+
+    // Construye la fecha como local (sin desfase horario)
+    return new Date(year, month - 1, day);
+}
+
+export function getLocalDate(date: string): Date | null {
+    if (!date) return null;
+
+    const [year, month, day] = date.split("-").map(Number);
 
     if (!year || !month || !day) return null;
 

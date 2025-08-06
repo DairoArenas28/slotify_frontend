@@ -7,6 +7,7 @@ import EditServiceForm from '../service/EditServiceForm';
 import DeleteServiceForm from '../service/DeleteServiceForm';
 import { AddUserForm } from '../user/AddUserForm';
 import { AddCustomerForm } from '../customer/AddCustomerForm';
+import EditCustomerForm from '../customer/EditCustomerForm';
 
 const componentsMap = {
   "AddService": AddServiceForm,
@@ -16,7 +17,8 @@ const componentsMap = {
   "AddUser": AddUserForm,
 
 
-  "AddCustomer": AddCustomerForm
+  "AddCustomer": AddCustomerForm,
+  "EditCustomer": EditCustomerForm
   //"EditExpense": EditExpenseForm,
   //"DeleteExpense": DeleteExpenseForm
 }
@@ -36,6 +38,7 @@ export default function ModalContainer() {
   const addUser = searchParams.get('addUser')
 
   const addCustomer = searchParams.get('addCustomer')
+  const editCustomer = searchParams.get('editCustomer')
 
   //console.log('Appointmend Edit', appointmentId)
 
@@ -50,6 +53,7 @@ export default function ModalContainer() {
     if (addUser) return "AddUser"
 
     if (addCustomer) return "AddCustomer"
+    if (editCustomer) return "EditCustomer"
 
     //if(editExpense) return "EditExpense"
     //if(deleteExpense) return "DeleteExpense"

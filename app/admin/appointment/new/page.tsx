@@ -1,4 +1,4 @@
-import CreateCalendarFormEvent from "@/app/components/appointment/AddAppointmentForm";
+import AddAppointmentForm from "@/app/components/appointment/AddAppointmentForm";
 import Link from "next/link";
 
 export default function CreateAppointmentPage() {
@@ -22,7 +22,7 @@ export default function CreateAppointmentPage() {
             </div>
 
             <div className='p-10 mt-10 shadow-lg border'>
-                <CreateCalendarFormEvent />
+                <AddAppointmentForm />
             </div>
         </>
     )
