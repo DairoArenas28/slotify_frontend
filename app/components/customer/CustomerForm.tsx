@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import AccordionItem from '../ui/AccordionItem';
+import { Input1 } from '../ui/Input1';
+import { documentType } from '@/src/utils/dataStatic';
+import CustomSelect from '../ui/CustomSelect';
 
 
 export default function CustomerForm() {
@@ -17,14 +20,10 @@ export default function CustomerForm() {
         isOpen={activeAccordion === '1'}
         onToggle={handleToggle}
       >
-        <div className="mb-5">
-          <label htmlFor="first_name" className="text-sm uppercase font-bold">Nombre</label>
-          <input id="first_name" name="first_name" className="w-full p-3 border border-gray-100 bg-white" placeholder="Nombre" />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="last_name" className="text-sm uppercase font-bold">Apellido</label>
-          <input id="last_name" name="last_name" className="w-full p-3 border border-gray-100 bg-white" placeholder="Apellido" />
-        </div>
+        <Input1 label='Nombre' name='first_name' type='text' placeholder='' inputId='first_name' defaultValue='' autoComplete='off' />
+
+        <Input1 label='Apellidos' name='last_name' type='text' placeholder='' inputId='last_name' defaultValue='' autoComplete='off' />
+
       </AccordionItem>
 
       <AccordionItem
@@ -34,25 +33,17 @@ export default function CustomerForm() {
         onToggle={handleToggle}
       >
 
-        <div className="flex flex-col gap-2">
-          <label className="font-bold text-2xl" htmlFor="serviceId">Tipo Documento</label>
-          <select
-            id="document_type"
+        {documentType.length > 0 && (
+          <CustomSelect
+            label="Tipo Documento"
             name="document_type"
-            className="w-full border border-gray-300 p-3 rounded-lg"
-          >
-            <option value="0">Selecciona tipo de documento</option>
-            <option value="1">Cédula de Ciudadanía</option>
-            <option value="2">Tarjeta de Identidad</option>
-            <option value="99">Otro</option>
-          </select>
-        </div>
+            options={documentType}
+            placeholder="Selecciona un servicio"
+            onChange={(selected) => console.log(selected)}
+          />
+        )}
 
-        <div className="mb-5">
-          <label htmlFor="document_number" className="text-sm uppercase font-bold">Documento</label>
-          <input id="document_number" name="document_number" className="w-full p-3 border border-gray-100 bg-white" placeholder="Documento" />
-        </div>
-
+        <Input1 label='Documento' name='document_number' type='text' placeholder='' inputId='document_number' defaultValue='' autoComplete='off' />
 
       </AccordionItem>
 
@@ -62,26 +53,12 @@ export default function CustomerForm() {
         isOpen={activeAccordion === '3'}
         onToggle={handleToggle}
       >
-        <div className="mb-5">
-          <label htmlFor="address" className="text-sm uppercase font-bold">Direccion</label>
-          <input id="address" name="address" type="text" className="w-full p-3 border border-gray-100 bg-white" placeholder="" />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="country" className="text-sm uppercase font-bold">Ciudad</label>
-          <input id="country" name="country" type="text" className="w-full p-3 border border-gray-100 bg-white" placeholder="" />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="email" className="text-sm uppercase font-bold">Correo</label>
-          <input id="email" name="email" type="text" className="w-full p-3 border border-gray-100 bg-white" placeholder="" />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="phone" className="text-sm uppercase font-bold">Telefono</label>
-          <input id="phone" name="phone" type="text" className="w-full p-3 border border-gray-100 bg-white" placeholder="" />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="birth_date" className="text-sm uppercase font-bold">Cumpleaños</label>
-          <input id="birth_date" name="birth_date" type="date" className="w-full p-3 border border-gray-100 bg-white" placeholder="" />
-        </div>
+        <Input1 label='Direccion' name='address' type='text' placeholder='' inputId='address' defaultValue='' autoComplete='off' />
+        <Input1 label='Ciudad' name='country' type='text' placeholder='' inputId='country' defaultValue='' autoComplete='off' />
+        <Input1 label='Correo' name='email' type='text' placeholder='' inputId='email' defaultValue='' autoComplete='off' />
+        <Input1 label='Teléfono' name='phone' type='text' placeholder='' inputId='phone' defaultValue='' autoComplete='off' />
+        <Input1 label='Cumpleaños' name='birth_date' type='date' placeholder='' inputId='birth_date' defaultValue='' autoComplete='off' />
+
       </AccordionItem>
     </div>
   );

@@ -9,13 +9,14 @@ import { fetcher } from "@/src/utils/fetcher";
 type TimeArraySchema = string[];
 import Select from 'react-select';
 import CustomSelect from "../ui/CustomSelect";
+import { stateType } from "@/src/utils/dataStatic";
 
 export default function AppointmentForm({ appointment }: { appointment?: Appointment }) {
 
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedService, setSelectedService] = useState(appointment?.serviceId || "");
     const [status, setStatus] = useState(appointment?.status || "");
-    const [selectedHour, setSelectedHour] = useState(appointment?.start_time || '');
+    const [selectedHour, setSelectedHour] = useState(formatHour(appointment?.start_time!) || '');
 
     const ref = useRef<HTMLFormElement>(null)
 
@@ -69,6 +70,18 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
         (option) => option.value === selectedService
     );
 
+    const defaultStateOption = stateType.find(
+        (option) => option.value === status
+    );
+
+    const defaultAvailableHourOption = (availableHoursOptions ?? []).find(
+        (option) => option.value === selectedHour
+    );
+
+    console.log("useState",selectedHour)
+    console.log("useState",availableHoursOptions)
+    console.log("Hour",defaultAvailableHourOption)
+
     return (
         <>
             {customerOptions.length > 0 && (
@@ -80,7 +93,6 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                     onChange={(selected) => console.log(selected)}
                 />
             )}
-
             <div className="flex flex-col gap-2">
                 <label className="font-bold text-2xl" htmlFor="date">Fecha</label>
                 <input
@@ -93,7 +105,6 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                     defaultValue={appointment?.date}
                 />
             </div>
-
             {availableHoursOptions.length > 0 && (
                 <CustomSelect
                     label=""
@@ -101,10 +112,10 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                     inputId="start_time"
                     options={availableHoursOptions}
                     placeholder="Selecciona una hora"
-                    onChange={(selected) => console.log(selected)}
+                    defaultValue={defaultAvailableHourOption}
+                    onChange={(selected) => setSelectedHour(String(selected))}
                 />
             )}
-
             {serviceOptions.length > 0 && (
                 <CustomSelect
                     label="Servicio"
@@ -115,24 +126,15 @@ export default function AppointmentForm({ appointment }: { appointment?: Appoint
                     onChange={(seleted) => setSelectedService(Number(seleted))}
                 />
             )}
-
             {appointment ? (
-                <div className="flex flex-col gap-2">
-                    <label className="font-bold text-2xl" htmlFor="serviceId">Estado</label>
-                    <select
-                        id="status"
-                        name="status"
-                        className="w-full border border-gray-300 p-3 rounded-lg"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                    >
-                        <option value="">Selecciona un estado</option>
-                        <option value="disponible">Disponible</option>
-                        <option value="reservado">Reservador</option>
-                        <option value="cancelado">Cancelado</option>
-                        <option value="completado">Completado</option>
-                    </select>
-                </div>
+                <CustomSelect
+                    label="Estado"
+                    name="status"
+                    options={stateType}
+                    placeholder="Selecciona un servicio"
+                    defaultValue={defaultStateOption}
+                    onChange={(seleted) => setStatus(String(seleted))}
+                />
             ) : (<></>)}
         </>
     );

@@ -10,7 +10,7 @@ import Pagination from "../ui/Pagination";
 export function CardUser() {
 
     const pathname = usePathname(); // solo la ruta, sin parámetros
-    console.log(pathname)
+    
     const searchParams = useSearchParams();
 
     const page = parseInt(searchParams.get('page') || '1');

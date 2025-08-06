@@ -84,38 +84,6 @@ export const AppointmentSchema = z.object({
     }),
 });
 
-export const AppointmentAPIResponseSchema = z.object({
-    total: z.number(),
-    page: z.number(),
-    totalPages: z.number(),
-    data: z.array(AppointmentSchema)
-})
-
-export const UserAPIResponseSchema = z.object({
-    total: z.number(),
-    page: z.number(),
-    totalPages: z.number(),
-    data: z.array(UserSchema)
-})
-
-
-
-export const DraftAppointmentSchema = z.object({
-    date: z.string().refine(val => !isNaN(Date.parse(val)), {
-        message: "Formato inválido",
-    }),
-    start_time: z.string(),
-    serviceId: z.string().min(1, { message: "Servicio es requerido" }),
-    status: z.string().optional()
-})
-
-export const DraftServiceSchema = z.object({
-    name: z.string(),
-    description: z.string(),
-    duration_minutes: z.number(),
-    price: z.number()
-})
-
 export const CustomerSchema = z.object({
     id: z.number().optional(),
     first_name: z.string().min(1, { message: "El nombre es requerido" }),
@@ -142,6 +110,47 @@ export const CustomerSchema = z.object({
 
     //z.date().optional()
 })
+
+export const AppointmentAPIResponseSchema = z.object({
+    total: z.number(),
+    page: z.number(),
+    totalPages: z.number(),
+    data: z.array(AppointmentSchema)
+})
+
+export const UserAPIResponseSchema = z.object({
+    total: z.number(),
+    page: z.number(),
+    totalPages: z.number(),
+    data: z.array(UserSchema)
+})
+
+export const CustomerAPIResponseSchema = z.object({
+    total: z.number(),
+    page: z.number(),
+    totalPages: z.number(),
+    data: z.array(CustomerSchema)
+})
+
+
+
+export const DraftAppointmentSchema = z.object({
+    date: z.string().refine(val => !isNaN(Date.parse(val)), {
+        message: "Formato inválido",
+    }),
+    start_time: z.string(),
+    serviceId: z.string().min(1, { message: "Servicio es requerido" }),
+    status: z.string().optional()
+})
+
+export const DraftServiceSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    duration_minutes: z.number(),
+    price: z.number()
+})
+
+
 
 export const ChartDataSchema = z.array(
     z.object({
@@ -186,4 +195,5 @@ export type ChartDataListSchema = z.infer<typeof ChartDataSchema>
 export type DraftCalendarList = z.infer<typeof CalendarAPIResponseSchema>;
 export type DraftAppointment = z.infer<typeof AppointmentAPIResponseSchema>
 export type DraftUser = z.infer<typeof UserAPIResponseSchema> 
-export type DraftCustomerList = z.infer<typeof CustomerSchema> 
+export type DraftCustomerList= z.infer<typeof CustomerSchema> 
+export type DraftCustomer= z.infer<typeof CustomerAPIResponseSchema> 

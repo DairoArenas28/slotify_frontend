@@ -30,7 +30,7 @@ export default function CustomSelect({
     isSearchable = true,
 }: CustomSelectProps) {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="relative flex flex-col gap-2 overflow-visible z-10">
             {label ? (
                 <label className="font-bold text-2xl" htmlFor={inputId ?? name}>
                     {label}
@@ -47,6 +47,7 @@ export default function CustomSelect({
                 isDisabled={isDisabled}
                 isSearchable={isSearchable}
                 className="w-full"
+                menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                 styles={{
                     control: (base) => ({
                         ...base,
@@ -59,6 +60,11 @@ export default function CustomSelect({
                     placeholder: (base) => ({
                         ...base,
                         color: '#9ca3af',
+                    }),
+
+                    menuPortal: (base) => ({
+                        ...base,
+                        zIndex: 9999, // o más alto si tienes modales
                     }),
                 }}
             />
